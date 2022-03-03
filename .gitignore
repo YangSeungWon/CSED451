@@ -32,3 +32,6 @@
 # opendb
 *.VC.opendb
 *.opendb
+
+# local
+.vs
