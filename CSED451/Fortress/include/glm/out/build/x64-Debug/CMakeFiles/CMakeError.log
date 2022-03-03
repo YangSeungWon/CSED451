@@ -1,0 +1,130 @@
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64/cl.exe 
+Build flags: 
+Id flags:  
+
+The output was:
+2
+Microsoft (R) C/C++ 최적화 컴파일러 버전 19.29.30140(x64)
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+CMakeCCompilerId.c
+Microsoft (R) Incremental Linker Version 14.29.30140.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+/out:CMakeCCompilerId.exe 
+CMakeCCompilerId.obj 
+LINK : fatal error LNK1104: 'kernel32.lib' 파일을 열 수 없습니다.
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64/cl.exe 
+Build flags: 
+Id flags:  
+
+The output was:
+2
+Microsoft (R) C/C++ 최적화 컴파일러 버전 19.29.30140(x64)
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+CMakeCXXCompilerId.cpp
+Microsoft (R) Incremental Linker Version 14.29.30140.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+/out:CMakeCXXCompilerId.exe 
+CMakeCXXCompilerId.obj 
+LINK : fatal error LNK1104: 'kernel32.lib' 파일을 열 수 없습니다.
+
+
+Detecting C compiler ABI info failed to compile with the following output:
+Change Dir: C:/Users/yoon1/source/repos/CSED451/CSED451/Fortress/include/glm/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_0e1a5 && [1/2] Building C object CMakeFiles\cmTC_0e1a5.dir\CMakeCCompilerABI.c.obj
+[2/2] Linking C executable cmTC_0e1a5.exe
+FAILED: cmTC_0e1a5.exe 
+cmd.exe /C "cd . && "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\cmTC_0e1a5.dir --rc=rc --mt=CMAKE_MT-NOTFOUND --manifests  -- C:\PROGRA~2\MICROS~3\2019\PROFES~1\VC\Tools\MSVC\1429~1.301\bin\Hostx64\x64\link.exe /nologo CMakeFiles\cmTC_0e1a5.dir\CMakeCCompilerABI.c.obj  /out:cmTC_0e1a5.exe /implib:cmTC_0e1a5.lib /pdb:cmTC_0e1a5.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+RC Pass 1: command "rc /fo CMakeFiles\cmTC_0e1a5.dir/manifest.res CMakeFiles\cmTC_0e1a5.dir/manifest.rc" failed (exit code 0) with the following output:
+지정된 파일을 찾을 수 없습니다
+ninja: build stopped: subcommand failed.
+
+
+
+
+Determining if the C compiler works failed with the following output:
+Change Dir: C:/Users/yoon1/source/repos/CSED451/CSED451/Fortress/include/glm/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_c9ca6 && [1/2] Building C object CMakeFiles\cmTC_c9ca6.dir\testCCompiler.c.obj
+[2/2] Linking C executable cmTC_c9ca6.exe
+FAILED: cmTC_c9ca6.exe 
+cmd.exe /C "cd . && "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\cmTC_c9ca6.dir --rc=rc --mt=CMAKE_MT-NOTFOUND --manifests  -- C:\PROGRA~2\MICROS~3\2019\PROFES~1\VC\Tools\MSVC\1429~1.301\bin\Hostx64\x64\link.exe /nologo CMakeFiles\cmTC_c9ca6.dir\testCCompiler.c.obj  /out:cmTC_c9ca6.exe /implib:cmTC_c9ca6.lib /pdb:cmTC_c9ca6.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+RC Pass 1: command "rc /fo CMakeFiles\cmTC_c9ca6.dir/manifest.res CMakeFiles\cmTC_c9ca6.dir/manifest.rc" failed (exit code 0) with the following output:
+지정된 파일을 찾을 수 없습니다
+ninja: build stopped: subcommand failed.
+
+
+
+Compiling the C compiler identification source file "CMakeCCompilerId.c" failed.
+Compiler: C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64/cl.exe 
+Build flags: /DWIN32;/D_WINDOWS;/W3
+Id flags:  
+
+The output was:
+2
+Microsoft (R) C/C++ 최적화 컴파일러 버전 19.29.30140(x64)
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+CMakeCCompilerId.c
+Microsoft (R) Incremental Linker Version 14.29.30140.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+/out:CMakeCCompilerId.exe 
+CMakeCCompilerId.obj 
+LINK : fatal error LNK1104: 'kernel32.lib' 파일을 열 수 없습니다.
+
+
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" failed.
+Compiler: C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/VC/Tools/MSVC/14.29.30133/bin/Hostx64/x64/cl.exe 
+Build flags: 
+Id flags:  
+
+The output was:
+2
+Microsoft (R) C/C++ 최적화 컴파일러 버전 19.29.30140(x64)
+Copyright (c) Microsoft Corporation. All rights reserved.
+
+CMakeCXXCompilerId.cpp
+Microsoft (R) Incremental Linker Version 14.29.30140.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+/out:CMakeCXXCompilerId.exe 
+CMakeCXXCompilerId.obj 
+LINK : fatal error LNK1104: 'kernel32.lib' 파일을 열 수 없습니다.
+
+
+Detecting C compiler ABI info failed to compile with the following output:
+Change Dir: C:/Users/yoon1/source/repos/CSED451/CSED451/Fortress/include/glm/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_f7efc && [1/2] Building C object CMakeFiles\cmTC_f7efc.dir\CMakeCCompilerABI.c.obj
+[2/2] Linking C executable cmTC_f7efc.exe
+FAILED: cmTC_f7efc.exe 
+cmd.exe /C "cd . && "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\cmTC_f7efc.dir --rc=rc --mt=CMAKE_MT-NOTFOUND --manifests  -- C:\PROGRA~2\MICROS~3\2019\PROFES~1\VC\Tools\MSVC\1429~1.301\bin\Hostx64\x64\link.exe /nologo CMakeFiles\cmTC_f7efc.dir\CMakeCCompilerABI.c.obj  /out:cmTC_f7efc.exe /implib:cmTC_f7efc.lib /pdb:cmTC_f7efc.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+RC Pass 1: command "rc /fo CMakeFiles\cmTC_f7efc.dir/manifest.res CMakeFiles\cmTC_f7efc.dir/manifest.rc" failed (exit code 0) with the following output:
+지정된 파일을 찾을 수 없습니다
+ninja: build stopped: subcommand failed.
+
+
+
+
+Determining if the C compiler works failed with the following output:
+Change Dir: C:/Users/yoon1/source/repos/CSED451/CSED451/Fortress/include/glm/out/build/x64-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):C:/Program Files (x86)/Microsoft Visual Studio/2019/Professional/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_df5d1 && [1/2] Building C object CMakeFiles\cmTC_df5d1.dir\testCCompiler.c.obj
+[2/2] Linking C executable cmTC_df5d1.exe
+FAILED: cmTC_df5d1.exe 
+cmd.exe /C "cd . && "C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E vs_link_exe --intdir=CMakeFiles\cmTC_df5d1.dir --rc=rc --mt=CMAKE_MT-NOTFOUND --manifests  -- C:\PROGRA~2\MICROS~3\2019\PROFES~1\VC\Tools\MSVC\1429~1.301\bin\Hostx64\x64\link.exe /nologo CMakeFiles\cmTC_df5d1.dir\testCCompiler.c.obj  /out:cmTC_df5d1.exe /implib:cmTC_df5d1.lib /pdb:cmTC_df5d1.pdb /version:0.0 /machine:x64  /debug /INCREMENTAL /subsystem:console  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib && cd ."
+RC Pass 1: command "rc /fo CMakeFiles\cmTC_df5d1.dir/manifest.res CMakeFiles\cmTC_df5d1.dir/manifest.rc" failed (exit code 0) with the following output:
+지정된 파일을 찾을 수 없습니다
+ninja: build stopped: subcommand failed.
+
+
+
