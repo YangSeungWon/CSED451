@@ -21,15 +21,15 @@ void Head::display() {
 	// crown
 	glColor3f(0.0f, 0.6f, 0.9f);
 	glBegin(GL_POLYGON);
-	for (angle = 0; angle < 2 * M_PI; angle += M_PI / 180) {
-		glVertex2f(x + 0.0, y + 7.0);
-		glVertex2f(x + 2.0, y + 10.0);
-		glVertex2f(x + 3.0, y + 7.0);
-		glVertex2f(x + 5.0, y + 8.0);
-		glVertex2f(x + 5.0, y + 5.0);
-		glVertex2f(x + 7.0, y + 3.0);
-		glVertex2f(x + 5.0, y + 0.0);
-	}
+		for (angle = 0; angle < 2 * M_PI; angle += M_PI / 180) {
+			glVertex2f(x + 0.0, y + 7.0);
+			glVertex2f(x + 2.0, y + 10.0);
+			glVertex2f(x + 3.0, y + 7.0);
+			glVertex2f(x + 5.0, y + 8.0);
+			glVertex2f(x + 5.0, y + 5.0);
+			glVertex2f(x + 7.0, y + 3.0);
+			glVertex2f(x + 5.0, y + 0.0);
+		}
 	glEnd();
 
 	// head
@@ -44,18 +44,18 @@ void Head::display() {
 	glColor3f(1.0f, 1.0f, 1.0f);
 	float e_radius = 0.3 * radius;
 	glBegin(GL_POLYGON);
-	for (angle = 0; angle < 2 * M_PI; angle += M_PI / 180) {
-		glVertex2f(x - 1.0 + e_radius * cos(angle), y + 2.0 + RATIO * e_radius * sin(angle));
-	}
+		for (angle = 0; angle < 2 * M_PI; angle += M_PI / 180) {
+			glVertex2f(x - 1.0 + e_radius * cos(angle), y + 2.0 + RATIO * e_radius * sin(angle));
+		}
 	glEnd();
 
 	// pupil
 	glColor3f(0.0f, 0.6f, 0.9f);
 	float p_radius = 0.2 * radius;
 	glBegin(GL_POLYGON);
-	for (angle = 0; angle < 2 * M_PI; angle += M_PI / 180) {
-		glVertex2f(x - 1.3 + p_radius * cos(angle), y + 2.7 + RATIO * p_radius * sin(angle));
-	}
+		for (angle = 0; angle < 2 * M_PI; angle += M_PI / 180) {
+			glVertex2f(x - 1.3 + p_radius * cos(angle), y + 2.7 + RATIO * p_radius * sin(angle));
+		}
 	glEnd();
 
 	// beak

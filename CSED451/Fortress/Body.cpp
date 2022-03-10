@@ -55,9 +55,9 @@ void Foot::display() {
 	float y = body->getY() - radius + 2.0;
 
 	glBegin(GL_POLYGON);
-	glVertex2f(x + 0.0 * radius, y + 0.0 * radius);
-	glVertex2f(x - 0.2 * radius, y - 0.55 * radius);
-	glVertex2f(x + 0.0 * radius, y - 0.8 * radius);
-	glVertex2f(x + 0.2 * radius, y - 0.55 * radius);
+		glVertex2f(x + 0.0 * radius, y + 0.0 * radius);
+		glVertex2f(x - 0.2 * radius, y - 0.55 * radius);
+		glVertex2f(x + 0.0 * radius, y - 0.8 * radius);
+		glVertex2f(x + 0.2 * radius, y - 0.55 * radius);
 	glEnd();
 }
