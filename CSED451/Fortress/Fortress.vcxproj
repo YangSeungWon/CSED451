@@ -151,13 +151,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Body.cpp" />
+    <ClCompile Include="Head.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Shell.cpp" />
-    <ClCompile Include="Tank.cpp" />
+    <ClCompile Include="Duck.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Body.h" />
+    <ClInclude Include="constant.h" />
+    <ClInclude Include="Head.h" />
     <ClInclude Include="Shell.h" />
-    <ClInclude Include="Tank.h" />
+    <ClInclude Include="Duck.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

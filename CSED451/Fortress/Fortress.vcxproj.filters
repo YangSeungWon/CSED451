@@ -18,18 +18,33 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Tank.cpp">
+    <ClCompile Include="Duck.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Shell.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Head.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Body.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Tank.h">
+    <ClInclude Include="Duck.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Shell.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Head.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Body.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="constant.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
