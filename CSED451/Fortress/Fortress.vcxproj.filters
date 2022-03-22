@@ -30,6 +30,9 @@
     <ClCompile Include="Body.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Duck.h">
@@ -44,7 +47,10 @@
     <ClInclude Include="Body.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="constant.h">
+    <ClInclude Include="constants.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

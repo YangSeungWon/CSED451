@@ -4,15 +4,19 @@
 #include <glm/vec3.hpp>
 #include <vector>
 #include "Duck.h"
-#include "constant.h"
+#include "Shell.h"
+#include "constants.h"
 
 #define SCREEN_HEIGHT 300
 #define SCREEN_WIDTH (SCREEN_HEIGHT * RATIO)
 
-Duck duck;
+Duck blueDuck;
+Duck whiteDuck;
+std::vector<Shell*> shells;
 
-void background_display();
+void backgroundDisplay();
 void update(int value);
+void updateShell(int value);
 
 void reshape(int w, int h) {
 	float posx = (w - SCREEN_WIDTH) / 2;
@@ -21,17 +25,36 @@ void reshape(int w, int h) {
 	glLoadIdentity();
 	gluOrtho2D(0.0, 100.0, 0.0, 100.0);
 }
+
 void renderScene(void) {
 	glClear(GL_COLOR_BUFFER_BIT);
-	background_display();
-	duck.display();
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluOrtho2D(0.0, 100.0, 0.0, 100.0);
+	backgroundDisplay();
+	glScalef(1.0, RATIO, 1.0);
+
+	glPushMatrix();
+	blueDuck.display();
+	glPopMatrix();
+
+	glPushMatrix();
+	whiteDuck.display();
+	glPopMatrix();
+
+	for (Shell* _shell : shells) {
+		glPushMatrix();
+		_shell->display();
+		glPopMatrix();
+	}
+
 	glutSwapBuffers();
 }
 
 void keyboard(unsigned char key, int x, int y) {
 	switch (key) {
 	case ' ':
-		duck.fire();
+		blueDuck.fire();
 		break;
 	}
 	glutPostRedisplay();
@@ -40,10 +63,10 @@ void keyboard(unsigned char key, int x, int y) {
 void specialkeyboard(int key, int x, int y) {
 	switch (key) {
 	case GLUT_KEY_RIGHT:
-		duck.goRight(1.0);
+		blueDuck.goRight(1.0);
 		break;
 	case GLUT_KEY_LEFT:
-		duck.goLeft(1.0);
+		blueDuck.goLeft(1.0);
 		break;
 	}
 	glutPostRedisplay();
@@ -65,7 +88,7 @@ void main(int argc, char** argv) {
 	glutMainLoop();
 }
 
-void background_display() {
+void backgroundDisplay() {
 	// Background
 	glColor3f(0.8f, 0.95f, 1.0f);
 	glRectf(0.0, 0.0, 100.0, 100.0);
@@ -77,6 +100,19 @@ void background_display() {
 
 void update(int value) {
 	glutPostRedisplay();
-	duck.updateShell(value);
+	updateShell(value);
 	glutTimerFunc(50, update, 1);
+}
+
+void updateShell(int value) {
+	std::cout << "update\n";
+	for (auto shell = shells.begin(); shell != shells.end(); ) {
+		std::cout << (*shell)->dy << '\n';
+		if (!(*shell)->update()) {
+			shell = shells.erase(remove(shells.begin(), shells.end(), *shell));
+		}
+		else {
+			shell++;
+		}
+	}
 }

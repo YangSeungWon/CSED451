@@ -8,24 +8,17 @@
 #include <algorithm>
 #include "Shell.h"
 #include "Duck.h"
-#include "constant.h"
-
-
-Body::Body(Duck* _duck)
-	: duck{ _duck }
-	, feet{ Foot(this, -3.0), Foot(this, 3.0) }{
-}
-
-float Body::getX() { return duck->getX() + offsetX; }
-float Body::getY() { return duck->getY() + offsetY; }
+#include "constants.h"
 
 void Body::display() {
-	//feet
-	feet[0].display();
-	feet[1].display();
+	//wheels
+	for (int i = 0; i < NUM_WHEELS; i++) {
+		glPushMatrix();
+		glTranslatef(-8.0 + 4.0 * i, -8.0, 0.0);
+		wheels[i].display();
+		glPopMatrix();
+	}
 
-	float x = duck->getX() + offsetX;
-	float y = duck->getY() + offsetY;
 	float angle;
 
 	glColor3f(0.2f, 0.2f, 0.2f);
@@ -33,31 +26,29 @@ void Body::display() {
 	// body
 	glBegin(GL_POLYGON);
 		for (angle = M_PI - M_PI * 0.2; angle < 2 * M_PI + M_PI * 0.2; angle += M_PI / 180) {
-			glVertex2f(x + radius * cos(angle), y + radius * sin(angle));
+			glVertex2f(10.0 * cos(angle), 6.7 * sin(angle));
 		}
 	glEnd();
 
 	// tail
+	glPushMatrix();
 	glBegin(GL_POLYGON);
 		float last_angle = 2 * M_PI + M_PI * 0.2;
-		glVertex2f(x + radius, y);
-		glVertex2f(x + radius, y + 7.0);
-		glVertex2f(x + radius * cos(last_angle), y + radius * sin(last_angle));
+		glVertex2f(10.0, 0.0);
+		glVertex2f(10.0, 4.7);
+		glVertex2f(10.0 * cos(last_angle), 6.7 * sin(last_angle));
 	glEnd();
+	glPopMatrix();
 }
 
 
-void Foot::display() {
+void Wheel::display() {
 	glColor3f(0.9f, 0.65f, 0.3f);
 
-	float radius = body->getRadius();
-	float x = body->getX() + offsetX;
-	float y = body->getY() - radius + 2.0;
-
 	glBegin(GL_POLYGON);
-		glVertex2f(x + 0.0 * radius, y + 0.0 * radius);
-		glVertex2f(x - 0.2 * radius, y - 0.55 * radius);
-		glVertex2f(x + 0.0 * radius, y - 0.8 * radius);
-		glVertex2f(x + 0.2 * radius, y - 0.55 * radius);
+		glVertex2f(0.0, 0.0);
+		glVertex2f(-2.0, -3.7);
+		glVertex2f(0.0, -5.3);
+		glVertex2f(2.0, -3.7);
 	glEnd();
 }

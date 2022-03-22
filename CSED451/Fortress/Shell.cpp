@@ -3,25 +3,21 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 #include <glm/vec3.hpp>
-#include "constant.h"
+#include "constants.h"
+#include "utils.h"
 
-Shell::Shell(float _x, float _y) {
+Shell::Shell(float _x, float _y, float _angle, unsigned int _power) {
 	x = _x;
 	y = _y;
-	dx = -2;
-	dy = +2;
-	radius = 1;
+	dx = cos(_angle) * _power;
+	dy = sin(_angle) * _power;
 }
 
 void Shell::display() {
 	float angle;
 	glColor3f(0.3f, 0.6f, 1.0f);
-
-	glBegin(GL_POLYGON);
-		for (angle = 0; angle < 2 * M_PI; angle += M_PI / 180) {
-			glVertex2f(x + radius * cos(angle), y + RATIO * radius * sin(angle));
-		}
-	glEnd();
+	glTranslatef(x, y, 0.0);
+	drawCircle(3.0);
 }
 
 bool Shell::update() {

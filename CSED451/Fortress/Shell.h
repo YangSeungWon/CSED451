@@ -5,10 +5,9 @@ private:
 	float x;
 	float y;
 	float dx;
-	float dy;
-	float radius;
 public:
-	Shell(float x, float y);
+	float dy;
+	Shell(float _x, float _y, float _angle, unsigned int _power);
 	void display();
 	bool update();
 };
