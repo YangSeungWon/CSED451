@@ -7,12 +7,16 @@
 #include <windows.h>
 #include <algorithm>
 #include "Shell.h"
+#include "constants.h"
 
 
 void Duck::display() {
 	glTranslatef(x, y, 0.0);
+	if (orientation == ori_t::LEFT) {
+		glScalef(-1.0f, 1.0f, 1.0f);
+	}
 	glPushMatrix();
-	glTranslatef(-5.0, 14.0, 0.0);
+	glTranslatef(5.0, 14.0, 0.0);
 	head.display();
 	glPopMatrix();
 	glPushMatrix();
@@ -22,6 +26,7 @@ void Duck::display() {
 }
 
 void Duck::goRight(float d) { 
+	orientation = ori_t::RIGHT;
 	x += d; 
 	if (x < 0) {
 		x = 0;
@@ -29,9 +34,11 @@ void Duck::goRight(float d) {
 	else if (x > 100) {
 		x = 100;
 	}
+	body.rotateWheel();
 }
 
 void Duck::goLeft(float d) {
+	orientation = ori_t::LEFT;
 	x -= d; 
 	if (x < 0) {
 		x = 0;
@@ -39,6 +46,7 @@ void Duck::goLeft(float d) {
 	else if (x > 100) {
 		x = 100;
 	}
+	body.rotateWheel();
 }
 
 void Duck::fire() {

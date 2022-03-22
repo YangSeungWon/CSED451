@@ -17,14 +17,14 @@ void Shell::display() {
 	float angle;
 	glColor3f(0.3f, 0.6f, 1.0f);
 	glTranslatef(x, y, 0.0);
-	drawCircle(3.0);
+	drawCircle(1.0);
 }
 
 bool Shell::update() {
 	x += dx;
 	y += dy;
 	dy -= 0.5;
-	if (y < 25) {
+	if (y < 16.7) {
 		return false;
 	}
 	return true;

@@ -12,3 +12,11 @@ void drawCircle(float radius) {
 	}
 	glEnd();
 }
+
+float radToDeg(float rad) {
+	return rad / M_PI * 180;
+}
+
+float degToRad(float deg) {
+	return deg / 180 * M_PI;
+}

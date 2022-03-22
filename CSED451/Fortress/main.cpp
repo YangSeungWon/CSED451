@@ -10,8 +10,8 @@
 #define SCREEN_HEIGHT 300
 #define SCREEN_WIDTH (SCREEN_HEIGHT * RATIO)
 
-Duck blueDuck;
-Duck whiteDuck;
+Duck blueDuck(20.0, ori_t::RIGHT);
+Duck whiteDuck(80.0, ori_t::LEFT);
 std::vector<Shell*> shells;
 
 void backgroundDisplay();
@@ -34,6 +34,12 @@ void renderScene(void) {
 	backgroundDisplay();
 	glScalef(1.0, RATIO, 1.0);
 
+	for (Shell* _shell : shells) {
+		glPushMatrix();
+		_shell->display();
+		glPopMatrix();
+	}
+
 	glPushMatrix();
 	blueDuck.display();
 	glPopMatrix();
@@ -42,12 +48,6 @@ void renderScene(void) {
 	whiteDuck.display();
 	glPopMatrix();
 
-	for (Shell* _shell : shells) {
-		glPushMatrix();
-		_shell->display();
-		glPopMatrix();
-	}
-
 	glutSwapBuffers();
 }
 
@@ -55,6 +55,18 @@ void keyboard(unsigned char key, int x, int y) {
 	switch (key) {
 	case ' ':
 		blueDuck.fire();
+		break;
+	case 'w':
+		blueDuck.increaseBeakAngle();
+		break;
+	case 's':
+		blueDuck.decreaseBeakAngle();
+		break;
+	case 'e':
+		blueDuck.increaseBeakPower();
+		break;
+	case 'q':
+		blueDuck.decreaseBeakPower();
 		break;
 	}
 	glutPostRedisplay();
