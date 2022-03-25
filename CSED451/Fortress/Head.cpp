@@ -15,7 +15,7 @@ void Head::display() {
 	float angle;
 
 	// crown
-	glColor3f(0.0f, 0.6f, 0.9f);
+	setColor(duck->getColorCrown());
 	glBegin(GL_POLYGON);
 		glVertex2f(0.0, 4.5);
 		glVertex2f(-2.0, 6.5);
@@ -27,7 +27,7 @@ void Head::display() {
 	glEnd();
 
 	// head
-	glColor3f(0.2f, 0.2f, 0.2f);
+	setColor(duck->getColorBody());
 	drawCircle(5.0);
 
 	// eye
@@ -40,7 +40,7 @@ void Head::display() {
 	// pupil
 	glPushMatrix();
 	glTranslatef(1.3, 2.7, 0.0);
-	glColor3f(0.0f, 0.6f, 0.9f);
+	setColor(duck->getColorCrown());
 	drawCircle(1.0);
 	glPopMatrix();
 

@@ -49,6 +49,28 @@ void Duck::goLeft(float d) {
 	body.rotateWheel();
 }
 
+void Duck::backRight(float d) {
+	x += d;
+}
+
+void Duck::backLeft(float d) {
+	x -= d;
+}
+
+void Duck::goDown(float d) {
+	y -= d;
+}
+
 void Duck::fire() {
 	head.fire();
+}
+
+bool Duck::strike() {
+	life--;
+	if (life <= 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }

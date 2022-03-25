@@ -7,3 +7,14 @@ typedef enum {
 	LEFT = 0,
 	RIGHT = 1,
 } ori_t;
+
+typedef enum class color {
+	BLACK,
+	BLUE,
+	BEIGE,
+	PINK,
+	SKYBLUE,
+	LIGHTSKYBLUE,
+	WHITE,
+	YELLOW
+} color;

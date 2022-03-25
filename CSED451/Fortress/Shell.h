@@ -5,10 +5,12 @@ private:
 	float x;
 	float y;
 	float dx;
-public:
 	float dy;
+public:
 	Shell(float _x, float _y, float _angle, unsigned int _power);
+	float getX() { return x; }
+	float getY() { return y; }
 	void display();
-	bool update();
+	void update();
 };
 

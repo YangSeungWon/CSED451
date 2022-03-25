@@ -20,12 +20,8 @@ void Shell::display() {
 	drawCircle(1.0);
 }
 
-bool Shell::update() {
+void Shell::update() {
 	x += dx;
 	y += dy;
 	dy -= 0.5;
-	if (y < 16.7) {
-		return false;
-	}
-	return true;
 }

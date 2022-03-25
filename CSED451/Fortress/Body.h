@@ -2,6 +2,8 @@
 
 #define NUM_WHEELS 5
 
+class Duck;
+
 class Wheel
 {
 private:
@@ -15,7 +17,9 @@ class Body
 {
 private:
 	Wheel wheels[NUM_WHEELS];
+	Duck* duck;
 public:
+	Body(Duck* _duck) : duck{ _duck } {}
 	void display();
 	void rotateWheel();
 };

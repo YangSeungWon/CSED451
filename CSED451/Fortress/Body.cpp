@@ -14,7 +14,7 @@
 void Body::display() {
 	float angle;
 
-	glColor3f(0.2f, 0.2f, 0.2f);
+	setColor(duck->getColorBody());
 
 	// body
 	glBegin(GL_POLYGON);
