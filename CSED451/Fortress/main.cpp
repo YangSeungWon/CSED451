@@ -223,7 +223,9 @@ bool checkCrash(Shell* shell) {
 	distance = sqrt(pow(x - blueDuck.getX(), 2) + pow(y - blueDuck.getY(), 2));
 	if (distance < Duck::crash_radius) {
 		if (blueDuck.strike(allFail ? 3 : 1)) {
-			deadDuck = &blueDuck;
+			if (deadDuck == nullptr) {
+				deadDuck = &blueDuck;
+			}
 		}
 		return true;
 	}
@@ -232,7 +234,9 @@ bool checkCrash(Shell* shell) {
 	distance = sqrt(pow(x - whiteDuck.getX(), 2) + pow(y - whiteDuck.getY(), 2));
 	if (distance < Duck::crash_radius) {
 		if (whiteDuck.strike(allPass ? 3 : 1)) {
-			deadDuck = &whiteDuck;
+			if (deadDuck == nullptr) {
+				deadDuck = &whiteDuck;
+			}
 		}
 		return true;
 	}
