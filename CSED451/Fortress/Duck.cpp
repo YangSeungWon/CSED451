@@ -65,8 +65,8 @@ void Duck::fire() {
 	head.fire();
 }
 
-bool Duck::strike() {
-	life--;
+bool Duck::strike(int power) {
+	life -= power;
 	if (life <= 0) {
 		return true;
 	}

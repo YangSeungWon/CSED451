@@ -37,5 +37,5 @@ public:
 	void decreaseBeakAngle() { head.decreaseBeakAngle(); }
 	void increaseBeakPower() { head.increaseBeakPower(); }
 	void decreaseBeakPower() { head.decreaseBeakPower(); }
-	bool strike();
+	bool strike(int power);
 };

@@ -33,7 +33,7 @@ void Head::display() {
 	// eye
 	glPushMatrix();
 	glTranslatef(1.0, 2.0, 0.0);
-	glColor3f(1.0f, 1.0f, 1.0f);
+	setColor(color::WHITE);
 	drawCircle(1.5);
 	glPopMatrix();
 
