@@ -2,6 +2,8 @@
 #include <iostream>
 #include <vector>
 #include "constants.h"
+#include <glm/glm.hpp>
+#include "objloader.h"
 
 class Duck;
 class Head;
@@ -28,8 +30,13 @@ class Head
 private:
 	Beak beak;
 	Duck* duck;
+	std::vector< glm::vec3 > vertices;
+	std::vector< glm::vec2 > uvs;
+	std::vector< glm::vec3 > normals;
 public:
-	Head(Duck* _duck) : duck{ _duck }, beak{ this } {}
+	Head(Duck* _duck) : duck{ _duck }, beak{ this } {
+		bool res = loadOBJ("resources/head.obj", vertices, uvs, normals);
+	}
 	Duck* getDuck() { return duck; }
 	void display();
 	void fire();

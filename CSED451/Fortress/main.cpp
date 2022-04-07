@@ -33,7 +33,7 @@ bool checkCrash(Shell* shell);
 void main(int argc, char** argv) {
 	std::srand(static_cast<unsigned int>(std::time(0)));
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH | GLUT_RGBA);
 	glutInitWindowPosition(250, 50);
 	glutInitWindowSize(800, 500);
 	glutCreateWindow("BlueDuck Fortress");
@@ -49,19 +49,25 @@ void main(int argc, char** argv) {
 }
 
 void reshape(int w, int h) {
-	float posx = (w - SCREEN_WIDTH) / 2;
-	float posy = (h - SCREEN_HEIGHT) / 2;
-	glViewport(posx, posy, SCREEN_WIDTH, SCREEN_HEIGHT);
+	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(0.0, 100.0, 0.0, 100.0);
+	gluPerspective(45, w / h, 0.1, 4333.0);
+	glMatrixMode(GL_MODELVIEW);
+	glViewport(0, 0, w, h);
 }
 
 void renderScene(void) {
-	glClear(GL_COLOR_BUFFER_BIT);
+
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-	gluOrtho2D(0.0, 100.0, 0.0, 100.0);
-	glScalef(1.0, RATIO, 1.0);
+	glScalef(1.0, 1.0, 1.0);
+	glTranslatef(0, 0, -100);
+
+	// Clear the screen
+	glClearDepthf(1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glShadeModel(GL_SMOOTH);
+	
 	backgroundDisplay();
 	drawLives();
 	if (deadDuck != nullptr) {
@@ -81,7 +87,7 @@ void renderScene(void) {
 	glPushMatrix();
 	whiteDuck.display();
 	glPopMatrix();
-
+	
 	glutSwapBuffers();
 }
 

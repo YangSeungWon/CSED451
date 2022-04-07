@@ -10,41 +10,15 @@
 #include "Duck.h"
 #include "constants.h"
 #include "utils.h"
+#include "objloader.h"
 
 void Head::display() {
 	float angle;
 
 	// crown
 	setColor(duck->getColorCrown());
-	glBegin(GL_POLYGON);
-		glVertex2f(0.0, 4.5);
-		glVertex2f(-2.0, 6.5);
-		glVertex2f(-3.0, 4.5);
-		glVertex2f(-5.0, 5.5);
-		glVertex2f(-5.0, 3.5);
-		glVertex2f(-7.0, 2.0);
-		glVertex2f(-5.0, 0.0);
-	glEnd();
+	drawModel(vertices, uvs);
 
-	// head
-	setColor(duck->getColorBody());
-	drawCircle(5.0);
-
-	// eye
-	glPushMatrix();
-	glTranslatef(1.0, 2.0, 0.0);
-	setColor(color::WHITE);
-	drawCircle(1.5);
-	glPopMatrix();
-
-	// pupil
-	glPushMatrix();
-	glTranslatef(1.3, 2.7, 0.0);
-	setColor(duck->getColorCrown());
-	drawCircle(1.0);
-	glPopMatrix();
-
-	// beak
 	glPushMatrix();
 	beak.display();
 	glPopMatrix();
