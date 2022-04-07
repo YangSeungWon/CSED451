@@ -49,26 +49,31 @@ void main(int argc, char** argv) {
 }
 
 void reshape(int w, int h) {
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(45, w / h, 0.1, 4333.0);
-	glMatrixMode(GL_MODELVIEW);
-	glViewport(0, 0, w, h);
+	//glViewport(0, 0, 800, 500);
+	//glMatrixMode(GL_PROJECTION);
+	//glLoadIdentity();
+	//glMatrixMode(GL_MODELVIEW);
 }
 
 void renderScene(void) {
-
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+	gluPerspective(90, 1, 0.1, 4333.0);
+	gluLookAt(0, 100, 0, 0, 0, 0, 0, 0, -1);
+
 	glScalef(1.0, 1.0, 1.0);
-	glTranslatef(0, 0, -100);
+	//glTranslatef(0, 0, -100);
 
 	// Clear the screen
 	glClearDepthf(1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glShadeModel(GL_SMOOTH);
-	
-	backgroundDisplay();
+
+	glPushMatrix();
+	glutWireSphere(10.0, 10, 20);
+	glPopMatrix();
+
+	//backgroundDisplay();
 	drawLives();
 	if (deadDuck != nullptr) {
 		printGameOver();
