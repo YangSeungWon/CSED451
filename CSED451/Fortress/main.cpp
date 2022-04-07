@@ -12,9 +12,9 @@
 #include "utils.h"
 #include "drawFunctions.h"
 
-float Duck::crash_radius = 10.0;
-Duck blueDuck(color::BLACK, color::BLUE, 20.0, ori_t::RIGHT);
-Duck whiteDuck(color::BEIGE, color::PINK, 80.0, ori_t::LEFT);
+float Duck::crash_radius = 20.0;
+Duck blueDuck(color::BLACK, color::BLUE, -50.0, 0.0, 0.0, 0.0);
+Duck whiteDuck(color::BEIGE, color::PINK, 50.0, 0.0, 0.0, 180.0);
 std::vector<Shell*> shells;
 bool isOver = false;
 Duck* deadDuck = nullptr;
@@ -63,8 +63,8 @@ void renderScene(void) {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluPerspective(90, 1, 0.1, 4333.0);
-	gluLookAt(0, 200, 0, 0, 0, 0, 0, 0, -1);
-	//gluLookAt(0, 0, -100, 0, 0, -1, 0, 1, 0);
+	gluLookAt(0, 400, 0, 0, 0, 0, 0, 0, -1);
+	//gluLookAt(0, 0, 150, 0, 0, 0, 0, 1, 0);
 
 	glScalef(1.0, 1.0, 1.0);
 	//glTranslatef(0, 0, -100);
@@ -74,9 +74,8 @@ void renderScene(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glShadeModel(GL_SMOOTH);
 
-	//backgroundDisplay();
 	ground.display();
-	drawLives();
+	//drawLives();
 	if (deadDuck != nullptr) {
 		printGameOver();
 	}
@@ -117,6 +116,12 @@ void keyboard(unsigned char key, int x, int y) {
 	case 'q':
 		blueDuck.decreaseBeakPower();
 		break;
+	case 'a':
+		blueDuck.rotateHead(-15.0);
+		break;
+	case 'd':
+		blueDuck.rotateHead(15.0);
+		break;
 	case 'c':
 		allPass = !allPass;
 		break;
@@ -129,17 +134,23 @@ void keyboard(unsigned char key, int x, int y) {
 
 void specialkeyboard(int key, int x, int y) {
 	switch (key) {
-	case GLUT_KEY_RIGHT:
-		blueDuck.goRight(1.0);
+	case GLUT_KEY_UP:
+		blueDuck.goForward(1.0);
 		if (checkCrash(&blueDuck)) {
-			blueDuck.backLeft(1.0);
+			blueDuck.goBack(1.0);
+		}
+		break;
+	case GLUT_KEY_DOWN:
+		blueDuck.goBack(1.0);
+		if (checkCrash(&blueDuck)) {
+			blueDuck.goForward(1.0);
 		}
 		break;
 	case GLUT_KEY_LEFT:
-		blueDuck.goLeft(1.0);
-		if (checkCrash(&blueDuck)) {
-			blueDuck.backRight(1.0);
-		}
+		blueDuck.rotate(15.0);
+		break;
+	case GLUT_KEY_RIGHT:
+		blueDuck.rotate(-15.0);
 		break;
 	}
 	glutPostRedisplay();
@@ -208,11 +219,11 @@ bool checkCrash(Duck* duck) {
 	Duck* enemy = (duck == &blueDuck) ? &whiteDuck : &blueDuck;
 
 	float x = duck->getX();
-	float y = duck->getY();
+	float z = duck->getZ();
 	float x_enemy = enemy->getX();
-	float y_enemy = enemy->getY();
+	float z_enemy = enemy->getZ();
 
-	float distance = sqrt(pow(x - x_enemy, 2) + pow(y - y_enemy, 2));
+	float distance = sqrt(pow(x - x_enemy, 2) + pow(z - z_enemy, 2));
 
 	if (distance < 2 * Duck::crash_radius) {
 		return true;

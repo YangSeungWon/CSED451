@@ -47,5 +47,8 @@ void setColor(color _color) {
 	case color::YELLOW:
 		glColor3f(0.9f, 0.65f, 0.3f);
 		break;
+	case color::LIGHTGRAY:
+		glColor3f(0.7f, 0.7f, 0.7f);
+		break;
 	}
 }

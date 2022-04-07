@@ -5,11 +5,7 @@
 #define SCREEN_HEIGHT 300
 #define SCREEN_WIDTH (SCREEN_HEIGHT * RATIO)
 #define GROUND_HEIGHT 15.0
-
-typedef enum class ori_t {
-	LEFT = 0,
-	RIGHT = 1,
-} ori_t;
+#define GROUND_BOUNDARY 80
 
 typedef enum class color {
 	BLACK,
@@ -19,5 +15,6 @@ typedef enum class color {
 	SKYBLUE,
 	LIGHTSKYBLUE,
 	WHITE,
-	YELLOW
+	YELLOW,
+	LIGHTGRAY
 } color;

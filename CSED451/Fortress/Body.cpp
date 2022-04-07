@@ -22,17 +22,25 @@ void Body::display() {
 	model.display();
 
 	//wheels
-	for (int i = 0; i < NUM_WHEELS; i++) {
+	for (int i = 0; i < 2; i++) {
 		glPushMatrix();
-		glTranslatef(-8.0 + 4.0 * i, -6.0, 0.0);
-		wheels[i].display();
+		glTranslatef(-11.0, -4.0, -8.0 + i * 16.0);
+		for (int j = 0; j < NUM_WHEELS; j++) {
+			glPushMatrix();
+			glTranslatef(11.0 * j, 0.0, 0.0);
+			wheels[j].display();
+			glPopMatrix();
+		}
 		glPopMatrix();
 	}
 }
 
 void Body::rotateWheel() {
+	bool isForward = duck->getForward();
 	for (int i = 0; i < NUM_WHEELS; i++) {
-		wheels[i].increaseAngle(-M_PI / 6);
+		wheels[i].increaseAngle(
+			isForward ? -(M_PI / 6) : (M_PI / 6)
+		);
 	}
 }
 

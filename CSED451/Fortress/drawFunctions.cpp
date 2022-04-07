@@ -10,16 +10,6 @@
 extern Duck blueDuck;
 extern Duck whiteDuck;
 
-void backgroundDisplay() {
-	// Background
-	setColor(color::LIGHTSKYBLUE);
-	glRectf(0.0, 0.0, 100.0, 100.0);
-
-	// Pond
-	setColor(color::SKYBLUE);
-	glRectf(0.0, 0.0, 100.0, GROUND_HEIGHT);
-}
-
 void drawLives() {
 	int i;
 	glPushMatrix();

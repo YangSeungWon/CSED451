@@ -8,53 +8,63 @@
 #include <algorithm>
 #include "Shell.h"
 #include "constants.h"
+#include "utils.h"
 
 
 void Duck::display() {
-	glTranslatef(x, y, 0.0);
-	if (orientation == ori_t::LEFT) {
-		glScalef(-1.0f, 1.0f, 1.0f);
-	}
+	glTranslatef(x, y, z);
+	glRotatef(angle, 0, 1, 0);
 	glPushMatrix();
-	glTranslatef(5.0, 14.0, 0.0);
+	glTranslatef(13.0, 22.0, 0.0);
+	glRotatef(headAngle, 0, 1, 0);
 	head.display();
 	glPopMatrix();
 	glPushMatrix();
-	glTranslatef(0.0, 6.5, 0.0);
+	glTranslatef(0.0, 10.0, 0.0);
 	body.display();
 	glPopMatrix();
 }
 
-void Duck::goRight(float d) { 
-	orientation = ori_t::RIGHT;
-	x += d; 
-	if (x < 0) {
-		x = 0;
+void Duck::goForward(float d) {
+	isForward = true;
+	x += d * cos(degToRad(angle));
+	z += -d * sin(degToRad(angle));
+
+	if (x < -GROUND_BOUNDARY) {
+		x = -GROUND_BOUNDARY;
 	}
-	else if (x > 100) {
-		x = 100;
+	else if (x > GROUND_BOUNDARY) {
+		x = GROUND_BOUNDARY;
+	}
+
+	if (z < -GROUND_BOUNDARY) {
+		z = -GROUND_BOUNDARY;
+	}
+	else if (z > GROUND_BOUNDARY) {
+		z = GROUND_BOUNDARY;
 	}
 	body.rotateWheel();
 }
 
-void Duck::goLeft(float d) {
-	orientation = ori_t::LEFT;
-	x -= d; 
-	if (x < 0) {
-		x = 0;
+void Duck::goBack(float d) {
+	isForward = false;
+	x -= d * cos(degToRad(angle));
+	z -= -d * sin(degToRad(angle));
+
+	if (x < -GROUND_BOUNDARY) {
+		x = -GROUND_BOUNDARY;
 	}
-	else if (x > 100) {
-		x = 100;
+	else if (x > GROUND_BOUNDARY) {
+		x = GROUND_BOUNDARY;
+	}
+
+	if (z < -GROUND_BOUNDARY) {
+		z = -GROUND_BOUNDARY;
+	}
+	else if (z > GROUND_BOUNDARY) {
+		z = GROUND_BOUNDARY;
 	}
 	body.rotateWheel();
-}
-
-void Duck::backRight(float d) {
-	x += d;
-}
-
-void Duck::backLeft(float d) {
-	x -= d;
 }
 
 void Duck::goDown(float d) {
@@ -63,6 +73,16 @@ void Duck::goDown(float d) {
 
 void Duck::fire() {
 	head.fire();
+}
+
+void Duck::rotateHead(float _angle) { 
+	headAngle += _angle; 
+	if (headAngle < -90) {
+		headAngle = -90;
+	}
+	else if (headAngle > 90) {
+		headAngle = 90;
+	}
 }
 
 bool Duck::strike(int power) {

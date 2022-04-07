@@ -1,7 +1,6 @@
 #pragma once
 
-#define NUM_WHEELS 5
-
+#define NUM_WHEELS 3
 #include <vector>
 #include "glm/vec3.hpp"
 #include "glm/vec2.hpp"
@@ -25,7 +24,7 @@ public:
 class Body
 {
 private:
-	Wheel wheels[NUM_WHEELS];
+	Wheel wheels[2 * NUM_WHEELS];
 	Duck* duck;
 	static Model model;
 public:

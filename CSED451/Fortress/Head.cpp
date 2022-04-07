@@ -48,14 +48,10 @@ void Beak::fire() {
 	// duck
 	x = duck->getX();
 	y = duck->getY();
-	ori_t orientation = duck->getOrientation();
 
 	// head
 	offsetX = 5;
 	offsetY = 14;
-	if (orientation == ori_t::LEFT) {
-		offsetX *= -1;
-	}
 	x += offsetX;
 	y += offsetY;
 
@@ -63,16 +59,10 @@ void Beak::fire() {
 	float radius = 8.5;
 	offsetX = radius * cos(angle);
 	offsetY = radius * sin(angle);
-	if (orientation == ori_t::LEFT) {
-		offsetX *= -1;
-	}
 	x += offsetX;
 	y += offsetY;
 
-	float shell_angle = angle;
-	if (orientation == ori_t::LEFT) {
-		shell_angle = -shell_angle + M_PI;
-	}
+	float shell_angle = angle; // !
 
 	Shell* new_shell = new Shell(x, y, shell_angle, power);
 	shells.push_back(new_shell);
