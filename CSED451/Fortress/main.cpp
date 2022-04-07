@@ -7,6 +7,7 @@
 #include <vector>
 #include "Duck.h"
 #include "Shell.h"
+#include "Ground.h"
 #include "constants.h"
 #include "utils.h"
 #include "drawFunctions.h"
@@ -19,6 +20,7 @@ bool isOver = false;
 Duck* deadDuck = nullptr;
 bool allPass = false;
 bool allFail = false;
+Ground ground;
 
 void reshape(int w, int h);
 void renderScene(void);
@@ -49,17 +51,20 @@ void main(int argc, char** argv) {
 }
 
 void reshape(int w, int h) {
-	//glViewport(0, 0, 800, 500);
-	//glMatrixMode(GL_PROJECTION);
-	//glLoadIdentity();
-	//glMatrixMode(GL_MODELVIEW);
+	int viewWidth = 1000;
+	int viewHeight = 1000;
+	glViewport((w - viewWidth) / 2, (h - viewHeight) / 2, viewWidth, viewHeight);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glMatrixMode(GL_MODELVIEW);
 }
 
 void renderScene(void) {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluPerspective(90, 1, 0.1, 4333.0);
-	gluLookAt(0, 100, 0, 0, 0, 0, 0, 0, -1);
+	gluLookAt(0, 200, 0, 0, 0, 0, 0, 0, -1);
+	//gluLookAt(0, 0, -100, 0, 0, -1, 0, 1, 0);
 
 	glScalef(1.0, 1.0, 1.0);
 	//glTranslatef(0, 0, -100);
@@ -70,6 +75,7 @@ void renderScene(void) {
 	glShadeModel(GL_SMOOTH);
 
 	//backgroundDisplay();
+	ground.display();
 	drawLives();
 	if (deadDuck != nullptr) {
 		printGameOver();

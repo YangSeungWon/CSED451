@@ -164,3 +164,11 @@ void Model::display() {
 	glDeleteBuffers(1, &vertexbuffer);
 	glDeleteBuffers(1, &uvbuffer);
 }
+
+void Model::setModel(std::vector<glm::vec3> _vertices,
+	std::vector<glm::vec2> _uvs,
+	std::vector<glm::vec3> _normals) {
+	vertices = _vertices;
+	uvs = _uvs;
+	normals = _normals;
+}

@@ -17,4 +17,7 @@ public:
 	Model(const char* _path) : path(_path) { }
 	bool load();
 	void display();
+	void setModel(std::vector<glm::vec3> _vertices,
+		std::vector<glm::vec2> _uvs,
+		std::vector<glm::vec3> _normals);
 };
