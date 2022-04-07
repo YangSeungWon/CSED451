@@ -20,6 +20,8 @@ Duck* deadDuck = nullptr;
 bool allPass = false;
 bool allFail = false;
 
+bool hiddenLineRemoval = false;
+
 void reshape(int w, int h);
 void renderScene(void);
 void keyboard(unsigned char key, int x, int y);
@@ -69,6 +71,13 @@ void renderScene(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glShadeModel(GL_SMOOTH);
 
+	if (hiddenLineRemoval) {
+		glEnable(GL_CULL_FACE);
+	}
+	else {
+		glDisable(GL_CULL_FACE);
+	}
+
 	//backgroundDisplay();
 	drawLives();
 	if (deadDuck != nullptr) {
@@ -116,6 +125,9 @@ void keyboard(unsigned char key, int x, int y) {
 		break;
 	case 'f':
 		allFail = !allFail;
+		break;
+	case 'r':
+		hiddenLineRemoval = !hiddenLineRemoval;
 		break;
 	}
 	glutPostRedisplay();
