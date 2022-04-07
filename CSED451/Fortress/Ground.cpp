@@ -17,11 +17,11 @@ Ground::Ground() {
 	for (int i = -width / 2; i < width - (width / 2); i++) {
 		for (int j = -height / 2; j < height - (height / 2); j++) {
 			vertices.push_back(glm::vec3(i * interval, 0, j * interval));
-			vertices.push_back(glm::vec3((i + 1) * interval, 0, j * interval));
-			vertices.push_back(glm::vec3(i * interval, 0, (j + 1) * interval));
 			vertices.push_back(glm::vec3(i * interval, 0, (j + 1) * interval));
 			vertices.push_back(glm::vec3((i + 1) * interval, 0, j * interval));
+			vertices.push_back(glm::vec3(i * interval, 0, (j + 1) * interval));
 			vertices.push_back(glm::vec3((i + 1) * interval, 0, (j + 1) * interval));
+			vertices.push_back(glm::vec3((i + 1) * interval, 0, j * interval));
 			uvs.push_back(glm::vec2(0, 0));
 			uvs.push_back(glm::vec2(0, 0));
 			uvs.push_back(glm::vec2(0, 0));

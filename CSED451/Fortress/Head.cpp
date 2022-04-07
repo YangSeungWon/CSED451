@@ -70,15 +70,15 @@ void Beak::fire() {
 
 void Beak::increaseBeakAngle()
 {
-	angle += M_PI / 12;
-	if (angle > M_PI / 2) {
-		angle = M_PI / 2;
+	angle += M_PI / 24;
+	if (angle > M_PI / 6) {
+		angle = M_PI / 6;
 	}
 }
 
 void Beak::decreaseBeakAngle()
 {
-	angle -= M_PI / 12;
+	angle -= M_PI / 24;
 	if (angle < 0) {
 		angle = 0;
 	}

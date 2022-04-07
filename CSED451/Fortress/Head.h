@@ -12,7 +12,7 @@ class Shell;
 class Beak
 {
 private:
-	float angle = M_PI / 4;
+	float angle = M_PI / 12;
 	unsigned int power = 3;
 	Head* head;
 	static Model model;
