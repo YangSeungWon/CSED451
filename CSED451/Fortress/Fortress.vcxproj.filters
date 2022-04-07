@@ -36,7 +36,7 @@
     <ClCompile Include="drawFunctions.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="objloader.cpp">
+    <ClCompile Include="Model.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,12 +62,21 @@
     <ClInclude Include="drawFunctions.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="objloader.h">
+    <ClInclude Include="Model.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Object Include="resources\head.obj">
+      <Filter>리소스 파일</Filter>
+    </Object>
+    <Object Include="resources\beak.obj">
+      <Filter>리소스 파일</Filter>
+    </Object>
+    <Object Include="resources\body.obj">
+      <Filter>리소스 파일</Filter>
+    </Object>
+    <Object Include="resources\wheel.obj">
       <Filter>리소스 파일</Filter>
     </Object>
   </ItemGroup>

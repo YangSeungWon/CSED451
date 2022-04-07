@@ -10,14 +10,16 @@
 #include "Duck.h"
 #include "constants.h"
 #include "utils.h"
-#include "objloader.h"
+#include "Model.h"
+
+Model Head::model = Model("resources/head.obj");
 
 void Head::display() {
 	float angle;
 
 	// crown
 	setColor(duck->getColorCrown());
-	drawModel(vertices, uvs);
+	model.display();
 
 	glPushMatrix();
 	beak.display();
@@ -29,16 +31,13 @@ void Head::fire() {
 }
 
 extern std::vector<Shell*> shells;
+Model Beak::model = Model("resources/beak.obj");
 
 void Beak::display() {
 	glRotatef(radToDeg(angle), 0.0, 0.0, 1.0);
 	glColor3f(0.9f, 0.9f - power * 0.10f, 0.3f);
 
-	glBegin(GL_POLYGON);
-		glVertex2f(4.5, 2.0);
-		glVertex2f(4.5, -2.0);
-		glVertex2f(8.5, 0.0);
-	glEnd();
+	model.display();
 }
 
 void Beak::fire() {

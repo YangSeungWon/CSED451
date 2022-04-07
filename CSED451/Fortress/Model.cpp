@@ -3,9 +3,15 @@
 #include <string>
 #include <cstring>
 
+#include <GL/glew.h>
+#include <GL/freeglut.h>
 #include <glm/glm.hpp>
+#include <glm/vec3.hpp>
+#include <glm/vec2.hpp>
+#include <vector>
 
-#include "objloader.h"
+#include "Model.h"
+
 
 // Very, VERY simple OBJ loader.
 // Here is a short list of features a real function would provide : 
@@ -17,12 +23,7 @@
 // - More secure. Change another line and you can inject code.
 // - Loading from memory, stream, etc
 
-bool loadOBJ(
-	const char* path,
-	std::vector<glm::vec3>& out_vertices,
-	std::vector<glm::vec2>& out_uvs,
-	std::vector<glm::vec3>& out_normals
-) {
+bool Model::loadOBJ() {
 	printf("Loading OBJ file %s...\n", path);
 
 	std::vector<unsigned int> vertexIndices, uvIndices, normalIndices;
@@ -105,11 +106,61 @@ bool loadOBJ(
 		glm::vec3 normal = temp_normals[normalIndex - 1];
 
 		// Put the attributes in buffers
-		out_vertices.push_back(vertex);
-		out_uvs.push_back(uv);
-		out_normals.push_back(normal);
+		vertices.push_back(vertex);
+		uvs.push_back(uv);
+		normals.push_back(normal);
 
 	}
 	fclose(file);
 	return true;
+}
+
+bool Model::load() {
+	if (!isLoaded) {
+		isLoaded = loadOBJ();
+	}
+	return isLoaded;
+}
+
+void Model::display() {
+	GLuint vertexbuffer;
+	glGenBuffers(1, &vertexbuffer);
+
+	GLuint uvbuffer;
+	glGenBuffers(1, &uvbuffer);
+	// 1rst attribute buffer : vertices
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
+	glVertexAttribPointer(
+		0,                  // attribute
+		3,                  // size
+		GL_FLOAT,           // type
+		GL_FALSE,           // normalized?
+		0,                  // stride
+		(void*)0            // array buffer offset
+	);
+
+	// 2nd attribute buffer : UVs
+	glEnableVertexAttribArray(1);
+	glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
+	glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(glm::vec2), &uvs[0], GL_STATIC_DRAW);
+	glVertexAttribPointer(
+		1,                                // attribute
+		2,                                // size
+		GL_FLOAT,                         // type
+		GL_FALSE,                         // normalized?
+		0,                                // stride
+		(void*)0                          // array buffer offset
+	);
+
+	// Draw the triangle !
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	glDisableVertexAttribArray(0);
+	glDisableVertexAttribArray(1);
+
+	glDeleteBuffers(1, &vertexbuffer);
+	glDeleteBuffers(1, &uvbuffer);
 }

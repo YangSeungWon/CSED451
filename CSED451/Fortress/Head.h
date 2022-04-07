@@ -3,7 +3,7 @@
 #include <vector>
 #include "constants.h"
 #include <glm/glm.hpp>
-#include "objloader.h"
+#include "Model.h"
 
 class Duck;
 class Head;
@@ -15,8 +15,11 @@ private:
 	float angle = M_PI / 4;
 	unsigned int power = 3;
 	Head* head;
+	static Model model;
 public:
-	Beak(Head* _head) : head{ _head } {}
+	Beak(Head* _head) : head{ _head } {
+		model.load();
+	}
 	void display();
 	void fire();
 	void increaseBeakAngle();
@@ -30,12 +33,10 @@ class Head
 private:
 	Beak beak;
 	Duck* duck;
-	std::vector< glm::vec3 > vertices;
-	std::vector< glm::vec2 > uvs;
-	std::vector< glm::vec3 > normals;
+	static Model model;
 public:
 	Head(Duck* _duck) : duck{ _duck }, beak{ this } {
-		bool res = loadOBJ("resources/head.obj", vertices, uvs, normals);
+		model.load();
 	}
 	Duck* getDuck() { return duck; }
 	void display();
