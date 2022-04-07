@@ -69,10 +69,6 @@ void renderScene(void) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glShadeModel(GL_SMOOTH);
 
-	glPushMatrix();
-	glutWireSphere(10.0, 10, 20);
-	glPopMatrix();
-
 	//backgroundDisplay();
 	drawLives();
 	if (deadDuck != nullptr) {

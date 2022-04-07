@@ -17,7 +17,7 @@ void Shell::display() {
 	float angle;
 	glColor3f(0.3f, 0.6f, 1.0f);
 	glTranslatef(x, y, 0.0);
-	drawCircle(1.0);
+	glutWireSphere(3.0, 5, 10);
 }
 
 void Shell::update() {
