@@ -22,6 +22,9 @@ bool allPass = false;
 bool allFail = false;
 Ground ground;
 
+view_t viewing_mode = view_t::THIRD_PERSON;
+bool hiddenLineRemoval = false;
+
 void reshape(int w, int h);
 void renderScene(void);
 void keyboard(unsigned char key, int x, int y);
@@ -63,8 +66,18 @@ void renderScene(void) {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluPerspective(90, 1, 0.1, 4333.0);
-	gluLookAt(0, 400, 0, 0, 0, 0, 0, 0, -1);
-	//gluLookAt(0, 0, 150, 0, 0, 0, 0, 1, 0);
+
+	switch (viewing_mode) {
+	case view_t::THIRD_PERSON:
+		gluLookAt(0, 0, 150, 0, 0, 0, 0, 1, 0);
+		break;
+	case view_t::FIRST_PERSON:
+		gluLookAt(0, 0, 150, 0, 0, 0, 0, 1, 0);
+		break;
+	case view_t::TOP_VIEW:
+		gluLookAt(0, 400, 0, 0, 0, 0, 0, 0, -1);
+		break;
+	}
 
 	glScalef(1.0, 1.0, 1.0);
 	//glTranslatef(0, 0, -100);
@@ -76,6 +89,13 @@ void renderScene(void) {
 
 	ground.display();
 	//drawLives();
+	if (hiddenLineRemoval) {
+		glEnable(GL_CULL_FACE);
+	}
+	else {
+		glDisable(GL_CULL_FACE);
+	}
+
 	if (deadDuck != nullptr) {
 		printGameOver();
 	}
@@ -127,6 +147,20 @@ void keyboard(unsigned char key, int x, int y) {
 		break;
 	case 'f':
 		allFail = !allFail;
+		break;
+	case 'v':
+		if (viewing_mode == view_t::THIRD_PERSON) {
+			viewing_mode = view_t::FIRST_PERSON;
+		}
+		else if (viewing_mode == view_t::FIRST_PERSON) {
+			viewing_mode = view_t::TOP_VIEW;
+		}
+		else if (viewing_mode == view_t::TOP_VIEW) {
+			viewing_mode = view_t::THIRD_PERSON;
+		}
+		break;
+	case 'r':
+		hiddenLineRemoval = !hiddenLineRemoval;
 		break;
 	}
 	glutPostRedisplay();

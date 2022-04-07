@@ -18,3 +18,9 @@ typedef enum class color {
 	YELLOW,
 	LIGHTGRAY
 } color;
+
+typedef enum class view_t {
+	THIRD_PERSON,
+	FIRST_PERSON,
+	TOP_VIEW,
+} view_t;
