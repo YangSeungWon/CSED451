@@ -22,6 +22,9 @@ public:
 	}
 	void display();
 	unsigned int fire();
+	float getAngle() { return angle; }
+	glm::vec3 getPos();
+	glm::vec3 getOrientation();
 	void increaseBeakAngle();
 	void decreaseBeakAngle();
 	void increaseBeakPower();
@@ -41,6 +44,7 @@ public:
 	Duck* getDuck() { return duck; }
 	void display();
 	unsigned int fire();
+	glm::vec3 getBeakPos() { return beak.getPos(); }
 	void increaseBeakAngle() { beak.increaseBeakAngle(); }
 	void decreaseBeakAngle() { beak.decreaseBeakAngle(); }
 	void increaseBeakPower() { beak.increaseBeakPower(); }

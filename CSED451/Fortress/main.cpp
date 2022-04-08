@@ -72,7 +72,15 @@ void renderScene(void) {
 		gluLookAt(0, 0, 150, 0, 0, 0, 0, 1, 0);
 		break;
 	case view_t::FIRST_PERSON:
-		gluLookAt(0, 0, 150, 0, 0, 0, 0, 1, 0);
+		glm::vec3 eyePos = blueDuck.getHeadPos() + glm::vec3(0, 15, 0);
+		glm::vec3 eyeLookAt = blueDuck.getBeakPos();
+		glm::vec3 cameraUp = glm::vec3(0, 1, 0);
+		//gluLookAt(0, 0, 150, 0, 0, 0, 0, 1, 0);
+		gluLookAt(
+			eyePos.x, eyePos.y, eyePos.z,
+			eyeLookAt.x, eyeLookAt.y, eyeLookAt.z,
+			cameraUp.x, cameraUp.y, cameraUp.z
+		);
 		break;
 	case view_t::TOP_VIEW:
 		gluLookAt(0, 400, 0, 0, 0, 0, 0, 0, -1);
@@ -137,10 +145,10 @@ void keyboard(unsigned char key, int x, int y) {
 		blueDuck.decreaseBeakPower();
 		break;
 	case 'a':
-		blueDuck.rotateHead(-15.0);
+		blueDuck.rotateHead(15.0);
 		break;
 	case 'd':
-		blueDuck.rotateHead(15.0);
+		blueDuck.rotateHead(-15.0);
 		break;
 	case 'c':
 		allPass = !allPass;
