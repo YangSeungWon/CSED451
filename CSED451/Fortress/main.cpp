@@ -69,15 +69,17 @@ void renderScene(void) {
 	glLoadIdentity();
 	gluPerspective(90, 1, 0.1, 4333.0);
 
+	glm::vec3 eyePos;
+	glm::vec3 eyeLookAt;
+	glm::vec3 cameraUp;
 	switch (viewing_mode) {
 	case view_t::THIRD_PERSON:
 		gluLookAt(0, 0, 150, 0, 0, 0, 0, 1, 0);
 		break;
 	case view_t::FIRST_PERSON:
-		glm::vec3 eyePos = blueDuck.getHeadPos() + glm::vec3(0, 15, 0);
-		glm::vec3 eyeLookAt = blueDuck.getBeakPos();
-		glm::vec3 cameraUp = glm::vec3(0, 1, 0);
-		//gluLookAt(0, 0, 150, 0, 0, 0, 0, 1, 0);
+		eyePos = blueDuck.getHeadPos() + glm::vec3(0, 15, 0);
+		eyeLookAt = blueDuck.getBeakPos();
+		cameraUp = glm::vec3(0, 1, 0);
 		gluLookAt(
 			eyePos.x, eyePos.y, eyePos.z,
 			eyeLookAt.x, eyeLookAt.y, eyeLookAt.z,
@@ -85,7 +87,16 @@ void renderScene(void) {
 		);
 		break;
 	case view_t::TOP_VIEW:
-		gluLookAt(0, 400, 0, 0, 0, 0, 0, 0, -1);
+		float duckAngle = degToRad(blueDuck.getAngle());
+		glm::vec3 duckOrientation = glm::vec3(cos(duckAngle), 0, -sin(duckAngle));
+		eyePos = blueDuck.getHeadPos() + glm::vec3(0, 30, 0) - (float)50 * duckOrientation;
+		eyeLookAt = blueDuck.getHeadPos();
+		cameraUp = glm::vec3(0, 1, 0);
+		gluLookAt(
+			eyePos.x, eyePos.y, eyePos.z,
+			eyeLookAt.x, eyeLookAt.y, eyeLookAt.z,
+			cameraUp.x, cameraUp.y, cameraUp.z
+		);
 		break;
 	}
 
