@@ -22,15 +22,14 @@ private:
 	Body body;
 	float headAngle = 0.0;
 	color color_body;
-	color color_crown;
 	int life = 3;
 public:
 	static float crash_radius;
-	Duck(color _color_body, color _color_crown, 
+	Duck(color _color_body,
 		float _x, float _y, float _z, float _angle) 
 		: head{ this }, body{ this },
 		pos{ glm::vec3(_x, _y, _z) }, angle{ _angle },
-		color_body{ _color_body }, color_crown{ _color_crown } {}
+		color_body{ _color_body } {}
 	void display();
 	void cageInBoundary();
 	void goForward(float d);
@@ -49,7 +48,6 @@ public:
 	void rotate(float _angle) { angle += _angle; }
 	int getLife() { return life; }
 	color getColorBody() { return color_body; }
-	color getColorCrown() { return color_crown; }
 	void rotateHead(float _angle);
 	void increaseBeakAngle() { head.increaseBeakAngle(); }
 	void decreaseBeakAngle() { head.decreaseBeakAngle(); }

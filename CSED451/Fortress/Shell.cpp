@@ -13,9 +13,9 @@ Shell::Shell(glm::vec3 _pos, glm::vec3 _velocity) {
 
 void Shell::display() {
 	float angle;
-	glColor3f(0.3f, 0.6f, 1.0f);
+	setColor(color::GREEN);
 	glTranslatef(pos.x, pos.y, pos.z);
-	glutWireSphere(3.0, 5, 10);
+	glutWireSphere(3.0, 30, 60);
 }
 
 void Shell::update() {

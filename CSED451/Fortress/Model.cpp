@@ -10,8 +10,10 @@
 #include <glm/vec2.hpp>
 #include <vector>
 
+#include "utils.h"
 #include "Model.h"
 
+extern bool hiddenLineRemoval;
 
 // Very, VERY simple OBJ loader.
 // Here is a short list of features a real function would provide : 
@@ -158,6 +160,15 @@ void Model::display() {
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	if (hiddenLineRemoval) {
+		setColor(color::DARKGRAY);
+		glPushMatrix();
+		glScalef(0.99, 0.99, 0.99);
+		glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+		glPopMatrix();
+	}
+
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 

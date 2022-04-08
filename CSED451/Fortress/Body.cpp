@@ -14,11 +14,8 @@
 Model Body::model = Model("resources/body.obj");
 
 void Body::display() {
-	float angle;
-
-	setColor(duck->getColorBody());
-
 	// body
+	setColor(duck->getColorBody());
 	model.display();
 
 	//wheels

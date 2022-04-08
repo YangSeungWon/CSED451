@@ -26,6 +26,9 @@ void setColor(color _color) {
 	case color::BLACK:
 		glColor3f(0.2f, 0.2f, 0.2f);
 		break;
+	case color::DARKGRAY:
+		glColor3f(0.3f, 0.3f, 0.3f);
+		break;
 	case color::BLUE:
 		glColor3f(0.0f, 0.6f, 0.9f);
 		break;
@@ -49,6 +52,9 @@ void setColor(color _color) {
 		break;
 	case color::LIGHTGRAY:
 		glColor3f(0.7f, 0.7f, 0.7f);
+		break;
+	case color::GREEN:
+		glColor3f(0.0f, 1.0f, 0.0f);
 		break;
 	}
 }

@@ -13,8 +13,8 @@
 #include "drawFunctions.h"
 
 float Duck::crash_radius = 20.0;
-Duck blueDuck(color::BLACK, color::BLUE, -50.0, 0.0, 0.0, 0.0);
-Duck whiteDuck(color::BEIGE, color::PINK, 50.0, 0.0, 0.0, 180.0);
+Duck blueDuck(color::BLUE, -50.0, 0.0, 0.0, 0.0);
+Duck whiteDuck(color::PINK, 50.0, 0.0, 0.0, 180.0);
 std::vector<Shell*> shells;
 bool isOver = false;
 Duck* deadDuck = nullptr;
@@ -112,12 +112,6 @@ void renderScene(void) {
 
 	ground.display();
 	//drawLives();
-	if (hiddenLineRemoval) {
-		glEnable(GL_CULL_FACE);
-	}
-	else {
-		glDisable(GL_CULL_FACE);
-	}
 
 	if (deadDuck != nullptr) {
 		printGameOver();

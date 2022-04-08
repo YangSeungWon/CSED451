@@ -10,6 +10,7 @@
 
 typedef enum class color {
 	BLACK,
+	DARKGRAY,
 	BLUE,
 	BEIGE,
 	PINK,
@@ -17,7 +18,8 @@ typedef enum class color {
 	LIGHTSKYBLUE,
 	WHITE,
 	YELLOW,
-	LIGHTGRAY
+	LIGHTGRAY,
+	GREEN,
 } color;
 
 typedef enum class view_t {

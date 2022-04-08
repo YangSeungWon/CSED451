@@ -15,10 +15,7 @@
 Model Head::model = Model("resources/head.obj");
 
 void Head::display() {
-	float angle;
-
-	// crown
-	setColor(duck->getColorCrown());
+	setColor(duck->getColorBody());
 	model.display();
 
 	glPushMatrix();
