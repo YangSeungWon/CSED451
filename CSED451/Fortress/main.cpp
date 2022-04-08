@@ -32,6 +32,7 @@ void specialkeyboard(int key, int x, int y);
 void update(int value);
 void updateShell(int value);
 void randomFire(int value);
+void randomMove(int value);
 bool checkCrash(Duck* duck);
 bool checkCrash(Shell* shell);
 
@@ -48,6 +49,7 @@ void main(int argc, char** argv) {
 	glutSpecialFunc(specialkeyboard);
 	glutTimerFunc(UPDATE_INTERVAL, update, 1);
 	glutTimerFunc(1000, randomFire, 0);
+	glutTimerFunc(100, randomMove, 0);
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	glewInit();
 	glutMainLoop();
@@ -252,6 +254,45 @@ void randomFire(int value) {
 	}
 
 	glutTimerFunc(300, randomFire, value + 1);
+}
+
+void randomMove(int value) {
+	if (deadDuck == &whiteDuck) {
+		return;
+	}
+
+	if (whiteDuck.getIsRecoil()) {
+		int randomNumber = std::rand() % 6;
+		glutTimerFunc(100, randomMove, randomNumber);
+		return;
+	}
+
+	switch (value) {
+	case 0:
+		whiteDuck.goForward(1.0);
+		if (checkCrash(&whiteDuck)) {
+			whiteDuck.goBack(1.0);
+		}
+		break;
+	case 1:
+		whiteDuck.goBack(1.0);
+		if (checkCrash(&whiteDuck)) {
+			whiteDuck.goForward(1.0);
+		}
+	case 2:
+		whiteDuck.rotate(15.0);
+		break;
+	case 3:
+		whiteDuck.rotate(-15.0);
+		break;
+	case 4:
+		whiteDuck.rotateHead(-15.0);
+		break;
+	case 5:
+		whiteDuck.rotateHead(-15.0);
+		break;
+	}
+	glutTimerFunc(100, randomMove, value);
 }
 
 bool checkCrash(Duck* duck) {

@@ -43,6 +43,7 @@ public:
 	float getHeadAngle() { return headAngle; }
 	void setForward(bool _isForward) { isForward = _isForward; }
 	bool getForward() { return isForward; }
+	bool getIsRecoil() { return isRecoil; }
 	void rotate(float _angle) { angle += _angle; }
 	int getLife() { return life; }
 	color getColorBody() { return color_body; }
