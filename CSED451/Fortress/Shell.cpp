@@ -6,22 +6,19 @@
 #include "constants.h"
 #include "utils.h"
 
-Shell::Shell(float _x, float _y, float _angle, unsigned int _power) {
-	x = _x;
-	y = _y;
-	dx = cos(_angle) * _power;
-	dy = sin(_angle) * _power;
+Shell::Shell(glm::vec3 _pos, glm::vec3 _velocity) {
+	pos = _pos;
+	velocity = _velocity;
 }
 
 void Shell::display() {
 	float angle;
 	glColor3f(0.3f, 0.6f, 1.0f);
-	glTranslatef(x, y, 0.0);
+	glTranslatef(pos.x, pos.y, pos.z);
 	glutWireSphere(3.0, 5, 10);
 }
 
 void Shell::update() {
-	x += dx;
-	y += dy;
-	dy -= 0.5;
+	pos += velocity;
+	velocity.y -= 0.5;
 }

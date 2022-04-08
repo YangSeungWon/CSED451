@@ -1,15 +1,13 @@
 #pragma once
+#include <glm/vec3.hpp>
 class Shell
 {
 private:
-	float x;
-	float y;
-	float dx;
-	float dy;
+	glm::vec3 pos;
+	glm::vec3 velocity;
 public:
-	Shell(float _x, float _y, float _angle, unsigned int _power);
-	float getX() { return x; }
-	float getY() { return y; }
+	Shell(glm::vec3 _pos, glm::vec3 _velocity);
+	glm::vec3 getPos() { return pos; }
 	void display();
 	void update();
 };

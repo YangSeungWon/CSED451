@@ -41,30 +41,34 @@ void Beak::display() {
 }
 
 unsigned int Beak::fire() {
-	float x, y, offsetX, offsetY;
-	x = y = 0;
+	glm::vec3 pos, velocity;
 	Duck* duck = head->getDuck();
 
 	// duck
-	x = duck->getX();
-	y = duck->getY();
+	pos = duck->getPos();
+	float duckAngle = duck->getAngle();
 
 	// head
-	offsetX = 5;
-	offsetY = 14;
-	x += offsetX;
-	y += offsetY;
+	pos += glm::vec3(
+		13.0 * cos(degToRad(duckAngle)), 
+		22.0, 
+		-13.0 * sin(degToRad(duckAngle))
+	);
+	float headAngle = duck->getHeadAngle();
+	velocity = pos;
 
 	// beak
-	float radius = 8.5;
-	offsetX = radius * cos(angle);
-	offsetY = radius * sin(angle);
-	x += offsetX;
-	y += offsetY;
+	float radius = 15.0;
+	pos += glm::vec3(
+		radius * cos(degToRad(duckAngle + headAngle)) * cos(angle),
+		radius * sin(angle),
+		-radius * sin(degToRad(duckAngle + headAngle)) * cos(angle)
+	);
+	velocity = pos - velocity;
+	velocity /= radius;
+	velocity *= (float)power;
 
-	float shell_angle = angle; // !
-
-	Shell* new_shell = new Shell(x, y, shell_angle, power);
+	Shell* new_shell = new Shell(pos, velocity);
 	shells.push_back(new_shell);
 
 	return power;

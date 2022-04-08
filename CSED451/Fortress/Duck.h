@@ -7,9 +7,7 @@
 class Duck
 {
 private:
-	float x;
-	float y;
-	float z;
+	glm::vec3 pos;
 	float angle;
 	bool isForward = true;
 
@@ -31,17 +29,18 @@ public:
 	Duck(color _color_body, color _color_crown, 
 		float _x, float _y, float _z, float _angle) 
 		: head{ this }, body{ this },
-		x{ _x }, y{ _y }, z{ _z }, angle{ _angle },
+		pos{ glm::vec3(_x, _y, _z) }, angle{ _angle },
 		color_body{ _color_body }, color_crown{ _color_crown } {}
 	void display();
+	void cageInBoundary();
 	void goForward(float d);
 	void goBack(float d);
 	void goDown(float d);
 	void fire();
 	void recoil();
-	float getX() { return x; }
-	float getY() { return y; }
-	float getZ() { return z; }
+	glm::vec3 getPos() { return pos; }
+	float getAngle() { return angle; }
+	float getHeadAngle() { return headAngle; }
 	void setForward(bool _isForward) { isForward = _isForward; }
 	bool getForward() { return isForward; }
 	void rotate(float _angle) { angle += _angle; }

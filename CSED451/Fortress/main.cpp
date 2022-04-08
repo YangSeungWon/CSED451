@@ -200,7 +200,7 @@ void update(int value) {
 	// Gameover Animation
 	if (deadDuck != nullptr) {
 		deadDuck->goDown(0.2);
-		if (deadDuck->getY() < -10) {
+		if (deadDuck->getPos().y < -10) {
 			exit(0);
 		}
 	}
@@ -257,12 +257,7 @@ void randomFire(int value) {
 bool checkCrash(Duck* duck) {
 	Duck* enemy = (duck == &blueDuck) ? &whiteDuck : &blueDuck;
 
-	float x = duck->getX();
-	float z = duck->getZ();
-	float x_enemy = enemy->getX();
-	float z_enemy = enemy->getZ();
-
-	float distance = sqrt(pow(x - x_enemy, 2) + pow(z - z_enemy, 2));
+	float distance = glm::length(duck->getPos() - enemy->getPos());
 
 	if (distance < 2 * Duck::crash_radius) {
 		return true;
@@ -273,17 +268,16 @@ bool checkCrash(Duck* duck) {
 }
 
 bool checkCrash(Shell* shell) {
-	float x = shell->getX();
-	float y = shell->getY();
+	float distance;
+	glm::vec3 shellPos = shell->getPos();
 
 	// Ground
-	if (y < GROUND_HEIGHT) {
+	if (shellPos.y < 0) {
 		return true;
 	}
 
-	float distance;
 	// blueDuck
-	distance = sqrt(pow(x - blueDuck.getX(), 2) + pow(y - blueDuck.getY(), 2));
+	distance = glm::length(blueDuck.getPos() - shellPos);
 	if (distance < Duck::crash_radius) {
 		if (blueDuck.strike(allFail ? 3 : 1)) {
 			if (deadDuck == nullptr) {
@@ -294,7 +288,7 @@ bool checkCrash(Shell* shell) {
 	}
 
 	// whiteDuck
-	distance = sqrt(pow(x - whiteDuck.getX(), 2) + pow(y - whiteDuck.getY(), 2));
+	distance = glm::length(whiteDuck.getPos() - shellPos);
 	if (distance < Duck::crash_radius) {
 		if (whiteDuck.strike(allPass ? 3 : 1)) {
 			if (deadDuck == nullptr) {

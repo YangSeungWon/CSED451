@@ -13,7 +13,7 @@
 
 
 void Duck::display() {
-	glTranslatef(x, y, z);
+	glTranslatef(pos.x, pos.y, pos.z);
 	glRotatef(angle, 0, 1, 0);
 	if (isRecoil) {
 		glTranslatef(displacement, 0.0, 0.0);
@@ -29,50 +29,41 @@ void Duck::display() {
 	glPopMatrix();
 }
 
+void Duck::cageInBoundary() { 
+	if (pos.x < -GROUND_BOUNDARY) {
+		pos.x = -GROUND_BOUNDARY;
+	}
+	else if (pos.x > GROUND_BOUNDARY) {
+		pos.x = GROUND_BOUNDARY;
+	}
+
+	if (pos.z < -GROUND_BOUNDARY) {
+		pos.z = -GROUND_BOUNDARY;
+	}
+	else if (pos.z > GROUND_BOUNDARY) {
+		pos.z = GROUND_BOUNDARY;
+	}
+}
+
 void Duck::goForward(float d) {
 	isForward = true;
-	x += d * cos(degToRad(angle));
-	z += -d * sin(degToRad(angle));
+	pos += glm::vec3(d * cos(degToRad(angle)), 0, -d * sin(degToRad(angle)));
 
-	if (x < -GROUND_BOUNDARY) {
-		x = -GROUND_BOUNDARY;
-	}
-	else if (x > GROUND_BOUNDARY) {
-		x = GROUND_BOUNDARY;
-	}
-
-	if (z < -GROUND_BOUNDARY) {
-		z = -GROUND_BOUNDARY;
-	}
-	else if (z > GROUND_BOUNDARY) {
-		z = GROUND_BOUNDARY;
-	}
+	cageInBoundary();
 	body.rotateWheel();
 }
 
 void Duck::goBack(float d) {
 	isForward = false;
-	x -= d * cos(degToRad(angle));
-	z -= -d * sin(degToRad(angle));
+	pos.x -= d * cos(degToRad(angle));
+	pos.z -= -d * sin(degToRad(angle));
 
-	if (x < -GROUND_BOUNDARY) {
-		x = -GROUND_BOUNDARY;
-	}
-	else if (x > GROUND_BOUNDARY) {
-		x = GROUND_BOUNDARY;
-	}
-
-	if (z < -GROUND_BOUNDARY) {
-		z = -GROUND_BOUNDARY;
-	}
-	else if (z > GROUND_BOUNDARY) {
-		z = GROUND_BOUNDARY;
-	}
+	cageInBoundary();
 	body.rotateWheel();
 }
 
 void Duck::goDown(float d) {
-	y -= d;
+	pos.y -= d;
 }
 
 void Duck::fire() {

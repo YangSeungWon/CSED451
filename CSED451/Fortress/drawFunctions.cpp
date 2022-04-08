@@ -45,8 +45,6 @@ void drawLives() {
 }
 
 void drawHeart(bool fill) {
-	glLineWidth(1.0);
-
 	glBegin(fill ? GL_POLYGON : GL_LINE_LOOP);
 	glVertex2f(0.0, 0.0);
 	glVertex2f(1.0, 1.0);
@@ -75,7 +73,6 @@ void printGameOver() {
 
 	glTranslatef(18.0f, 50.0f, 0.0f);
 	glScalef(3.0, 3.0, 0.0);
-	glLineWidth(3.0);
 
 	// G
 	glBegin(GL_LINE_STRIP);
