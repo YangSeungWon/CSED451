@@ -21,7 +21,7 @@ public:
 		model.load();
 	}
 	void display();
-	void fire();
+	unsigned int fire();
 	void increaseBeakAngle();
 	void decreaseBeakAngle();
 	void increaseBeakPower();
@@ -40,7 +40,7 @@ public:
 	}
 	Duck* getDuck() { return duck; }
 	void display();
-	void fire();
+	unsigned int fire();
 	void increaseBeakAngle() { beak.increaseBeakAngle(); }
 	void decreaseBeakAngle() { beak.decreaseBeakAngle(); }
 	void increaseBeakPower() { beak.increaseBeakPower(); }

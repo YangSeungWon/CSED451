@@ -26,8 +26,8 @@ void Head::display() {
 	glPopMatrix();
 }
 
-void Head::fire() {
-	beak.fire();
+unsigned int Head::fire() {
+	return beak.fire();
 }
 
 extern std::vector<Shell*> shells;
@@ -40,7 +40,7 @@ void Beak::display() {
 	model.display();
 }
 
-void Beak::fire() {
+unsigned int Beak::fire() {
 	float x, y, offsetX, offsetY;
 	x = y = 0;
 	Duck* duck = head->getDuck();
@@ -66,6 +66,8 @@ void Beak::fire() {
 
 	Shell* new_shell = new Shell(x, y, shell_angle, power);
 	shells.push_back(new_shell);
+
+	return power;
 }
 
 void Beak::increaseBeakAngle()

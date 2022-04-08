@@ -46,7 +46,7 @@ void main(int argc, char** argv) {
 	glutDisplayFunc(renderScene);
 	glutKeyboardFunc(keyboard);
 	glutSpecialFunc(specialkeyboard);
-	glutTimerFunc(50, update, 1);
+	glutTimerFunc(UPDATE_INTERVAL, update, 1);
 	glutTimerFunc(1000, randomFire, 0);
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	glewInit();
@@ -193,13 +193,18 @@ void specialkeyboard(int key, int x, int y) {
 void update(int value) {
 	glutPostRedisplay();
 	updateShell(value);
+
+	blueDuck.recoil();
+	whiteDuck.recoil();
+
+	// Gameover Animation
 	if (deadDuck != nullptr) {
 		deadDuck->goDown(0.2);
 		if (deadDuck->getY() < -10) {
 			exit(0);
 		}
 	}
-	glutTimerFunc(50, update, 1);
+	glutTimerFunc(UPDATE_INTERVAL, update, 1);
 }
 
 void updateShell(int value) {

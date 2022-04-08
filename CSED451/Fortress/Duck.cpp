@@ -6,6 +6,7 @@
 #include <vector>
 #include <windows.h>
 #include <algorithm>
+#include <ctime>
 #include "Shell.h"
 #include "constants.h"
 #include "utils.h"
@@ -14,6 +15,9 @@
 void Duck::display() {
 	glTranslatef(x, y, z);
 	glRotatef(angle, 0, 1, 0);
+	if (isRecoil) {
+		glTranslatef(displacement, 0.0, 0.0);
+	}
 	glPushMatrix();
 	glTranslatef(13.0, 22.0, 0.0);
 	glRotatef(headAngle, 0, 1, 0);
@@ -72,7 +76,25 @@ void Duck::goDown(float d) {
 }
 
 void Duck::fire() {
-	head.fire();
+	if (!isRecoil) {
+		lastFirePower = head.fire();
+		lastFireTime = (float)std::clock();
+
+		// setup recoil
+		isRecoil = true;
+		displacement = 0.0f;
+		velocity = -2.0f * lastFirePower;
+	}
+}
+
+void Duck::recoil() {
+	displacement += velocity;
+	velocity -= displacement * SPRING_FORCE * UPDATE_INTERVAL / 1000.0f;
+	velocity *= 1.0 - DAMPING * UPDATE_INTERVAL / 1000.0f;
+
+	if (abs(displacement) < 0.2f && abs(velocity) < 0.2f) {
+		isRecoil = false;
+	}
 }
 
 void Duck::rotateHead(float _angle) { 

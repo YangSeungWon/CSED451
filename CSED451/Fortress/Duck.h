@@ -1,4 +1,5 @@
 #pragma once
+#include <glm/vec3.hpp>
 #include "Head.h"
 #include "Body.h"
 #include "constants.h"
@@ -11,6 +12,14 @@ private:
 	float z;
 	float angle;
 	bool isForward = true;
+
+	// Recoil
+	bool isRecoil = false;
+	float lastFireTime = 0.0f;
+	unsigned int lastFirePower = 0;
+	float displacement;
+	float velocity;
+
 	Head head;
 	Body body;
 	float headAngle = 0.0;
@@ -29,6 +38,7 @@ public:
 	void goBack(float d);
 	void goDown(float d);
 	void fire();
+	void recoil();
 	float getX() { return x; }
 	float getY() { return y; }
 	float getZ() { return z; }
