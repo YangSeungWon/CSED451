@@ -111,11 +111,6 @@ void renderScene(void) {
 	glShadeModel(GL_SMOOTH);
 
 	ground.display();
-	//drawLives();
-
-	if (deadDuck != nullptr) {
-		printGameOver();
-	}
 
 	for (Shell* _shell : shells) {
 		glPushMatrix();
