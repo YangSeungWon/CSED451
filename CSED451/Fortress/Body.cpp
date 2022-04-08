@@ -11,6 +11,8 @@
 #include "constants.h"
 #include "utils.h"
 
+extern bool hiddenLineRemoval;
+
 Model Body::model = Model("resources/body.obj");
 
 void Body::display() {
@@ -30,6 +32,25 @@ void Body::display() {
 		}
 		glPopMatrix();
 	}
+
+	// lives
+	glPushMatrix();
+	glTranslatef(5.0, 10.0, 0.0);
+	for (int i = 0; i < duck->getLife(); i++) {
+		glTranslatef(-6.0, 0.0, 0.0);
+
+		setColor(color::GREEN);
+		glutWireCube(3.0);
+		if (hiddenLineRemoval) {
+			setColor(color::DARKGRAY);
+			glPushMatrix();
+			glScalef(0.99, 0.99, 0.99);
+			glutSolidCube(3.0);
+			glPopMatrix();
+		}
+
+	}
+	glPopMatrix();
 }
 
 void Body::rotateWheel() {

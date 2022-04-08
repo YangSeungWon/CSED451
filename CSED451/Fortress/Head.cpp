@@ -12,7 +12,6 @@
 #include "utils.h"
 #include "Model.h"
 
-extern bool hiddenLineRemoval;
 
 Model Head::model = Model("resources/head.obj");
 
@@ -22,24 +21,6 @@ void Head::display() {
 
 	glPushMatrix();
 	beak.display();
-	glPopMatrix();
-
-	glPushMatrix();
-	glTranslatef(0.0, 10.0, 0.0);
-	for (int i = 0; i < duck->getLife(); i++) {
-		glTranslatef(0.0, 4.0, 0.0);
-
-		setColor(duck->getColorBody());
-		glutWireCube(3.0);
-		if (hiddenLineRemoval) {
-			setColor(color::DARKGRAY);
-			glPushMatrix();
-			glScalef(0.99, 0.99, 0.99);
-			glutSolidCube(3.0);
-			glPopMatrix();
-		}
-
-	}
 	glPopMatrix();
 }
 
