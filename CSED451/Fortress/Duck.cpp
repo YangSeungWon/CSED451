@@ -99,10 +99,12 @@ void Duck::rotateHead(float _angle) {
 }
 
 glm::vec3 Duck::getHeadPos() {
-	glm::vec3 headPos = pos + 
-		(
-			(float)displacement * 
-			glm::vec3(cos(degToRad(angle + headAngle)), 0, -sin(degToRad(angle + headAngle)))
+	glm::vec3 headPos = pos + (
+			(float)displacement * glm::vec3(
+				cos(degToRad(angle + headAngle)), 
+				0, 
+				-sin(degToRad(angle + headAngle))
+			)
 		);
 
 	// head
