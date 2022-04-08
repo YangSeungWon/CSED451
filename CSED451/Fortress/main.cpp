@@ -107,6 +107,12 @@ void renderScene(void) {
 	glShadeModel(GL_SMOOTH);
 
 	ground.display();
+	if (hiddenLineRemoval) {
+		glEnable(GL_CULL_FACE);
+	}
+	else {
+		glDisable(GL_CULL_FACE);
+	}
 
 	for (Shell* _shell : shells) {
 		glPushMatrix();
