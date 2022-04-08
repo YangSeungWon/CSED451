@@ -267,6 +267,11 @@ void randomMove(int value) {
 		return;
 	}
 
+	if (allPass) {
+		glutTimerFunc(100, randomMove, value);
+		return;
+	}
+
 	if (whiteDuck.getIsRecoil()) {
 		int randomNumber = std::rand() % 6;
 		glutTimerFunc(100, randomMove, randomNumber);
