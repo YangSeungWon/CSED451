@@ -16,7 +16,9 @@ void Duck::display() {
 	glTranslatef(pos.x, pos.y, pos.z);
 	glRotatef(angle, 0, 1, 0);
 	if (isRecoil) {
+		glRotatef(headAngle, 0, 1, 0);
 		glTranslatef(displacement, 0.0, 0.0);
+		glRotatef(-headAngle, 0, 1, 0);
 	}
 	glPushMatrix();
 	glTranslatef(13.0, 22.0, 0.0);
