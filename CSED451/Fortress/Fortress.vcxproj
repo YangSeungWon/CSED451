@@ -152,7 +152,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Body.cpp" />
-    <ClCompile Include="drawFunctions.cpp" />
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Head.cpp" />
     <ClCompile Include="main.cpp" />
@@ -164,7 +163,6 @@
   <ItemGroup>
     <ClInclude Include="Body.h" />
     <ClInclude Include="constants.h" />
-    <ClInclude Include="drawFunctions.h" />
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Head.h" />
     <ClInclude Include="Model.h" />

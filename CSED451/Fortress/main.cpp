@@ -10,7 +10,6 @@
 #include "Ground.h"
 #include "constants.h"
 #include "utils.h"
-#include "drawFunctions.h"
 
 float Duck::crash_radius = 20.0;
 Duck blueDuck(color::BLUE, -50.0, 0.0, 0.0, 0.0);
@@ -100,9 +99,6 @@ void renderScene(void) {
 		gluLookAt(0, 400, 0, 0, 0, 0, 0, 0, -1);
 		break;
 	}
-
-	glScalef(1.0, 1.0, 1.0);
-	//glTranslatef(0, 0, -100);
 
 	// Clear the screen
 	glClearDepthf(1.0f);
@@ -212,7 +208,7 @@ void update(int value) {
 	// Gameover Animation
 	if (deadDuck != nullptr) {
 		deadDuck->goDown(0.2);
-		if (deadDuck->getPos().y < -10) {
+		if (deadDuck->getPos().y < -40) {
 			exit(0);
 		}
 	}

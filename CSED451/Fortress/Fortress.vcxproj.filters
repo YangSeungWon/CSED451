@@ -33,9 +33,6 @@
     <ClCompile Include="utils.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="drawFunctions.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Model.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -60,9 +57,6 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="utils.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="drawFunctions.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Model.h">
