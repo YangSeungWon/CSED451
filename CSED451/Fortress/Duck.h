@@ -41,6 +41,8 @@ public:
 	glm::vec3 getPos() { return pos; }
 	float getAngle() { return angle; }
 	float getHeadAngle() { return headAngle; }
+	glm::vec3 getHeadPos();
+	glm::vec3 getBeakPos() { return head.getBeakPos(); }
 	void setForward(bool _isForward) { isForward = _isForward; }
 	bool getForward() { return isForward; }
 	bool getIsRecoil() { return isRecoil; }

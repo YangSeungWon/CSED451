@@ -40,22 +40,16 @@ void Beak::display() {
 	model.display();
 }
 
-unsigned int Beak::fire() {
-	glm::vec3 pos, velocity;
+glm::vec3 Beak::getPos() {
+	glm::vec3 pos;
 	Duck* duck = head->getDuck();
 
 	// duck
-	pos = duck->getPos();
 	float duckAngle = duck->getAngle();
 
 	// head
-	pos += glm::vec3(
-		13.0 * cos(degToRad(duckAngle)), 
-		22.0, 
-		-13.0 * sin(degToRad(duckAngle))
-	);
+	pos = duck->getHeadPos();
 	float headAngle = duck->getHeadAngle();
-	velocity = pos;
 
 	// beak
 	float radius = 15.0;
@@ -64,11 +58,32 @@ unsigned int Beak::fire() {
 		radius * sin(angle),
 		-radius * sin(degToRad(duckAngle + headAngle)) * cos(angle)
 	);
-	velocity = pos - velocity;
-	velocity /= radius;
-	velocity *= (float)power;
 
-	Shell* new_shell = new Shell(pos, velocity);
+	return pos;
+}
+
+unsigned int Beak::fire() {
+	glm::vec3 pos, orientation;
+	Duck* duck = head->getDuck();
+
+	// duck
+	float duckAngle = duck->getAngle();
+
+	// head
+	pos = duck->getHeadPos();
+	float headAngle = duck->getHeadAngle();
+	orientation = pos;
+
+	// beak
+	float radius = 15.0;
+	pos += glm::vec3(
+		radius * cos(degToRad(duckAngle + headAngle)) * cos(angle),
+		radius * sin(angle),
+		-radius * sin(degToRad(duckAngle + headAngle)) * cos(angle)
+	);
+	orientation = pos - orientation;
+
+	Shell* new_shell = new Shell(pos, orientation * (float)power / radius);
 	shells.push_back(new_shell);
 
 	return power;
