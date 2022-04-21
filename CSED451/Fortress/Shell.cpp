@@ -3,29 +3,28 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 #include <glm/vec3.hpp>
+#include <glm/mat4x4.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include "constants.h"
 #include "utils.h"
+#include "Model.h"
 
 extern bool hiddenLineRemoval;
+
+Model Shell::model = Model("resources/shell.obj");
 
 Shell::Shell(glm::vec3 _pos, glm::vec3 _velocity) {
 	pos = _pos;
 	velocity = _velocity;
 }
 
-void Shell::display() {
+void Shell::display(glm::mat4 modelmtx, glm::mat4 projmtx) {
 	float angle;
-	//setColor(color::GREEN);
-	glTranslatef(pos.x, pos.y, pos.z);
-	glutWireSphere(3.0, 5, 10);
-
-	if (hiddenLineRemoval) {
-		//setColor(color::DARKGRAY);
-		glPushMatrix();
-		glScalef(0.99, 0.99, 0.99);
-		glutSolidSphere(3.0, 5, 10);
-		glPopMatrix();
-	}
+	glm::vec4 color4;
+	glm::mat4 shellModelmtx = modelmtx;
+	color4 = getColor(color::GREEN);
+	shellModelmtx = glm::translate(shellModelmtx, glm::vec3(pos.x, pos.y, pos.z));
+	model.display(color4, shellModelmtx, projmtx);
 }
 
 void Shell::update() {

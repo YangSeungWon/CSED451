@@ -27,6 +27,7 @@ private:
 public:
 	Body(Duck* _duck) : duck{ _duck } {}
 	static Model model;
+	static Model lifemodel;
 	void display(glm::mat4 modelmtx, glm::mat4 projmtx);
 	void rotateWheel();
 };

@@ -16,6 +16,7 @@ extern bool hiddenLineRemoval;
 extern unsigned int ID;
 
 Model Body::model = Model("resources/body.obj");
+Model Body::lifemodel = Model("resources/life.obj");
 
 void Body::display(glm::mat4 modelmtx, glm::mat4 projmtx) {
 	// body
@@ -32,25 +33,15 @@ void Body::display(glm::mat4 modelmtx, glm::mat4 projmtx) {
 		}
 	}
 
-	/*
 	// lives
 	glm::mat4 lifeModelmtx = modelmtx;
-	glTranslatef(5.0, 10.0, 0.0);
+	lifeModelmtx = glm::translate(lifeModelmtx, glm::vec3(5.0, 10.0, 0.0));
 	for (int i = 0; i < duck->getLife(); i++) {
-		glTranslatef(-6.0, 0.0, 0.0);
+		lifeModelmtx = glm::translate(lifeModelmtx, glm::vec3(-6.0, 0.0, 0.0));
 
-		setColor(color::GREEN);
-		glutWireCube(3.0);
-		if (hiddenLineRemoval) {
-			setColor(color::DARKGRAY);
-			glPushMatrix();
-			glScalef(0.99, 0.99, 0.99);
-			glutSolidCube(3.0);
-			glPopMatrix();
-		}
-
+		color4 = getColor(color::GREEN);
+		lifemodel.display(color4, lifeModelmtx, projmtx);
 	}
-	*/
 }
 
 void Body::rotateWheel() {

@@ -74,9 +74,9 @@ void reshape(int w, int h) {
 }
 
 void renderScene(void) {
+	glEnable(GL_DEPTH_TEST);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
 
 	projmtx = glm::perspective(90.0, 1.0, 0.1, 4333.0);
 
@@ -109,13 +109,11 @@ void renderScene(void) {
 	}
 
 	ground.display(modelmtx, projmtx);
-	/*
+	
 	for (Shell* _shell : shells) {
-		glPushMatrix();
-		_shell->display();
-		glPopMatrix();
+		_shell->display(modelmtx, projmtx);
 	}
-	*/
+	
 	blueDuck.display(modelmtx, projmtx);
 	whiteDuck.display(modelmtx, projmtx);
 
@@ -355,22 +353,21 @@ void InitShader() {
 	std::string fragmentCode;
 	std::ifstream vShaderFile;
 	std::ifstream fShaderFile;
-	// ifstream 객체들이 예외를 던질 수 있도록 합니다.
+
 	vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 	fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 	try
 	{
-		// 파일 열기
 		vShaderFile.open("shaders/vertexShader.vs");
 		fShaderFile.open("shaders/fragmentShader.fs");
 		std::stringstream vShaderStream, fShaderStream;
-		// stream에 파일의 버퍼 내용을 읽기
+
 		vShaderStream << vShaderFile.rdbuf();
 		fShaderStream << fShaderFile.rdbuf();
-		// 파일 핸들러 닫기
+
 		vShaderFile.close();
 		fShaderFile.close();
-		// stream을 string으로 변환
+
 		vertexCode = vShaderStream.str();
 		fragmentCode = fShaderStream.str();
 	}
@@ -385,11 +382,9 @@ void InitShader() {
 	int success;
 	char infoLog[512];
 
-	// vertex Shader
 	vertex = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vertex, 1, &vShaderCode, NULL);
 	glCompileShader(vertex);
-	// 오류가 발생한다면 컴파일 오류를 출력
 	glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
 	if (!success)
 	{
@@ -397,11 +392,9 @@ void InitShader() {
 		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
 	};
 
-	// fragment Shader
 	fragment = glCreateShader(GL_FRAGMENT_SHADER);
 	glShaderSource(fragment, 1, &fShaderCode, NULL);
 	glCompileShader(fragment);
-	// 오류가 발생한다면 컴파일 오류를 출력
 	glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
 	if (!success)
 	{
@@ -409,12 +402,10 @@ void InitShader() {
 		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
 	};
 
-	// shader Program
 	ID = glCreateProgram();
 	glAttachShader(ID, vertex);
 	glAttachShader(ID, fragment);
 	glLinkProgram(ID);
-	// 오류가 발생한다면 링킹 오류를 출력
 	glGetProgramiv(ID, GL_LINK_STATUS, &success);
 	if (!success)
 	{
@@ -422,7 +413,6 @@ void InitShader() {
 		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
 	}
 
-	// program 내부에서 shader들이 링크 완료되었다면 이제 필요 없으므로 shader들을 삭제
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
 }
@@ -430,6 +420,9 @@ void InitShader() {
 void LoadOBJs() {
 	Head::model.load();
 	Body::model.load();
+	Body::lifemodel.load();
 	Beak::model.load();
 	Wheel::model.load();
+	Shell::model.load();
+
 }
