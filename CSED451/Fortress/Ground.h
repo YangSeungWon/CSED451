@@ -1,4 +1,5 @@
 #pragma once
+#include "glm/mat4x4.hpp"
 #include "Model.h"
 #include "constants.h"
 
@@ -11,5 +12,5 @@ private:
 	static Model model;
 public:
 	Ground();
-	void display();
+	void display(glm::mat4 modelmtx, glm::mat4 projmtx);
 };

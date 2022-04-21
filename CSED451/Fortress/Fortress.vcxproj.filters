@@ -80,4 +80,8 @@
       <Filter>리소스 파일</Filter>
     </Object>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\vertexShader.vs" />
+    <None Include="shaders\fragmentShader.fs" />
+  </ItemGroup>
 </Project>

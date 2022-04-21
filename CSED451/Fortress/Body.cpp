@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 #include <glm/vec3.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <vector>
 #include <windows.h>
 #include <algorithm>
@@ -12,29 +13,28 @@
 #include "utils.h"
 
 extern bool hiddenLineRemoval;
+extern unsigned int ID;
 
 Model Body::model = Model("resources/body.obj");
 
-void Body::display() {
+void Body::display(glm::mat4 modelmtx, glm::mat4 projmtx) {
 	// body
-	setColor(duck->getColorBody());
-	model.display();
+	glm::vec4 color4 = getColor(duck->getColorBody());
+	model.display(color4, modelmtx, projmtx);
 
 	//wheels
+	glm::mat4 wheelModelmtx;
 	for (int i = 0; i < 2; i++) {
-		glPushMatrix();
-		glTranslatef(-11.0, -4.0, -8.0 + i * 16.0);
+		wheelModelmtx = glm::translate(modelmtx, glm::vec3(-11.0, -4.0, -8.0 + i * 16.0));
 		for (int j = 0; j < NUM_WHEELS; j++) {
-			glPushMatrix();
-			glTranslatef(11.0 * j, 0.0, 0.0);
-			wheels[j].display();
-			glPopMatrix();
+			wheelModelmtx = glm::translate(wheelModelmtx, glm::vec3(11.0, 0.0, 0.0));
+			wheels[j].display(wheelModelmtx, projmtx);
 		}
-		glPopMatrix();
 	}
 
+	/*
 	// lives
-	glPushMatrix();
+	glm::mat4 lifeModelmtx = modelmtx;
 	glTranslatef(5.0, 10.0, 0.0);
 	for (int i = 0; i < duck->getLife(); i++) {
 		glTranslatef(-6.0, 0.0, 0.0);
@@ -50,7 +50,7 @@ void Body::display() {
 		}
 
 	}
-	glPopMatrix();
+	*/
 }
 
 void Body::rotateWheel() {
@@ -64,9 +64,10 @@ void Body::rotateWheel() {
 
 Model Wheel::model = Model("resources/wheel.obj");
 
-void Wheel::display() {
-	glRotatef(radToDeg(angle), 0.0, 0.0, 1.0);
-	glColor3f(0.9f, 0.65f, 0.3f);
+void Wheel::display(glm::mat4 modelmtx, glm::mat4 projmtx) {
+	glm::mat4 wheelModelmtx = modelmtx;
+	wheelModelmtx = glm::rotate(wheelModelmtx, angle, glm::vec3(0.0, 0.0, 1.0));
+	glm::vec4 color4 = getColor(color::YELLOW);
 
-	model.display();
+	model.display(color4, wheelModelmtx, projmtx);
 }

@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 #include <glm/vec3.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <vector>
 #include <windows.h>
 #include <algorithm>
@@ -15,13 +16,10 @@
 
 Model Head::model = Model("resources/head.obj");
 
-void Head::display() {
-	setColor(duck->getColorBody());
-	model.display();
-
-	glPushMatrix();
-	beak.display();
-	glPopMatrix();
+void Head::display(glm::mat4 modelmtx, glm::mat4 projmtx) {
+	glm::vec4 color4 = getColor(duck->getColorBody());
+	model.display(color4, modelmtx, projmtx);
+	beak.display(modelmtx, projmtx);
 }
 
 unsigned int Head::fire() {
@@ -31,11 +29,11 @@ unsigned int Head::fire() {
 extern std::vector<Shell*> shells;
 Model Beak::model = Model("resources/beak.obj");
 
-void Beak::display() {
-	glRotatef(radToDeg(angle), 0.0, 0.0, 1.0);
-	glColor3f(0.9f, 0.9f - power * 0.10f, 0.3f);
-
-	model.display();
+void Beak::display(glm::mat4 modelmtx, glm::mat4 projmtx) {
+	glm::mat4 beakModelmtx = modelmtx;
+	beakModelmtx = glm::rotate(beakModelmtx, angle, glm::vec3(0.0, 0.0, 1.0));
+	glm::vec4 color = glm::vec4(0.9f, 0.9f - power * 0.10f, 0.3f, 1.0f);
+	model.display(color, beakModelmtx, projmtx);
 }
 
 glm::vec3 Beak::getPos() {

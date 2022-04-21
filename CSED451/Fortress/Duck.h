@@ -1,5 +1,6 @@
 #pragma once
 #include <glm/vec3.hpp>
+#include <glm/mat4x4.hpp>
 #include "Head.h"
 #include "Body.h"
 #include "constants.h"
@@ -30,7 +31,7 @@ public:
 		: head{ this }, body{ this },
 		pos{ glm::vec3(_x, _y, _z) }, angle{ _angle },
 		color_body{ _color_body } {}
-	void display();
+	void display(glm::mat4 modelmtx, glm::mat4 projmtx);
 	void cageInBoundary();
 	void goForward(float d);
 	void goBack(float d);

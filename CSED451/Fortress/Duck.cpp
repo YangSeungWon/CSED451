@@ -3,6 +3,7 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 #include <glm/vec3.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include <vector>
 #include <windows.h>
 #include <algorithm>
@@ -11,24 +12,26 @@
 #include "constants.h"
 #include "utils.h"
 
+extern unsigned int ID;
 
-void Duck::display() {
-	glTranslatef(pos.x, pos.y, pos.z);
-	glRotatef(angle, 0, 1, 0);
+void Duck::display(glm::mat4 modelmtx, glm::mat4 projmtx) {
+	glm::mat4 duckModelmtx = modelmtx;
+	duckModelmtx = glm::translate(duckModelmtx, glm::vec3(pos.x, pos.y, pos.z));
+	duckModelmtx = glm::rotate(duckModelmtx, degToRad(angle), glm::vec3(0, 1, 0));
 	if (isRecoil) {
-		glRotatef(headAngle, 0, 1, 0);
-		glTranslatef(displacement, 0.0, 0.0);
-		glRotatef(-headAngle, 0, 1, 0);
+		duckModelmtx = glm::rotate(duckModelmtx, degToRad(headAngle), glm::vec3(0, 1, 0));
+		duckModelmtx = glm::translate(duckModelmtx, glm::vec3(displacement, 0.0, 0.0));
+		duckModelmtx = glm::rotate(duckModelmtx, degToRad (-headAngle), glm::vec3(0, 1, 0));
 	}
-	glPushMatrix();
-	glTranslatef(13.0, 22.0, 0.0);
-	glRotatef(headAngle, 0, 1, 0);
-	head.display();
-	glPopMatrix();
-	glPushMatrix();
-	glTranslatef(0.0, 10.0, 0.0);
-	body.display();
-	glPopMatrix();
+
+	glm::mat4 headModelmtx = duckModelmtx;
+	headModelmtx = glm::translate(headModelmtx, glm::vec3(13.0, 22.0, 0.0));
+	headModelmtx = glm::rotate(headModelmtx, degToRad(headAngle), glm::vec3(0, 1, 0));
+	head.display(headModelmtx, projmtx);
+
+	glm::mat4 bodyModelmtx = duckModelmtx;
+	bodyModelmtx = glm::translate(bodyModelmtx, glm::vec3(0.0, 10.0, 0.0));
+	body.display(bodyModelmtx, projmtx);
 }
 
 void Duck::cageInBoundary() { 

@@ -2,8 +2,10 @@
 #include <vector>
 #include <GL/glew.h>
 #include <GL/freeglut.h>
-#include <glm/vec3.hpp>
 #include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+#include <glm/mat4x4.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include "Ground.h"
 #include "Model.h"
 #include "utils.h"
@@ -34,19 +36,21 @@ Ground::Ground() {
 	model.setModel(vertices, uvs, normals);
 }
 
-void Ground::display() {
+void Ground::display(glm::mat4 modelmtx, glm::mat4 projmtx) {
+	glm::vec4 color;
+	glm::mat4 groundModelmtx;
 	for (int i = 0; i < 3; i++) {
+		groundModelmtx = glm::translate(modelmtx, glm::vec3(interval * width * (-1 + i), 0, -interval * height));
 		for (int j = 0; j < 3; j++) {
 			if (i == 1 && j == 1) {
-				setColor(color::LIGHTSKYBLUE);
+				color = getColor(color::LIGHTSKYBLUE);
 			}
 			else {
-				setColor(color::LIGHTGRAY);
+				color = getColor(color::LIGHTGRAY);
 			}
-			glPushMatrix();
-			glTranslatef(interval * width * (-1 + i), 0, interval * height * (-1 + j));
-			model.display();
-			glPopMatrix();
+
+			model.display(color, groundModelmtx, projmtx);
+			groundModelmtx = glm::translate(groundModelmtx, glm::vec3(0, 0, interval * height));
 		}
 	}
 }

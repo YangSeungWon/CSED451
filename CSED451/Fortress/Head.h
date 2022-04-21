@@ -15,12 +15,10 @@ private:
 	float angle = M_PI / 12;
 	unsigned int power = 3;
 	Head* head;
-	static Model model;
 public:
-	Beak(Head* _head) : head{ _head } {
-		model.load();
-	}
-	void display();
+	Beak(Head* _head) : head{ _head } {}
+	static Model model;
+	void display(glm::mat4 modelmtx, glm::mat4 projmtx);
 	unsigned int fire();
 	float getAngle() { return angle; }
 	glm::vec3 getPos();
@@ -36,13 +34,11 @@ class Head
 private:
 	Beak beak;
 	Duck* duck;
-	static Model model;
 public:
-	Head(Duck* _duck) : duck{ _duck }, beak{ this } {
-		model.load();
-	}
+	Head(Duck* _duck) : duck{ _duck }, beak{ this } {}
+	static Model model;
 	Duck* getDuck() { return duck; }
-	void display();
+	void display(glm::mat4 modelmtx, glm::mat4 projmtx);
 	unsigned int fire();
 	glm::vec3 getBeakPos() { return beak.getPos(); }
 	void increaseBeakAngle() { beak.increaseBeakAngle(); }

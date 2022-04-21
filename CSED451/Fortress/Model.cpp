@@ -2,18 +2,21 @@
 #include <stdio.h>
 #include <string>
 #include <cstring>
+#include <iostream>
 
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 #include <glm/glm.hpp>
 #include <glm/vec3.hpp>
 #include <glm/vec2.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include <vector>
 
 #include "utils.h"
 #include "Model.h"
 
 extern bool hiddenLineRemoval;
+extern unsigned int ID;
 
 // Very, VERY simple OBJ loader.
 // Here is a short list of features a real function would provide : 
@@ -114,6 +117,7 @@ bool Model::loadOBJ() {
 
 	}
 	fclose(file);
+
 	return true;
 }
 
@@ -124,11 +128,9 @@ bool Model::load() {
 	return isLoaded;
 }
 
-void Model::display() {
-	GLuint vertexbuffer;
+void Model::display(glm::vec4 color, glm::mat4 modelmtx, glm::mat4 projmtx) {
+	// Buffer binding
 	glGenBuffers(1, &vertexbuffer);
-
-	GLuint uvbuffer;
 	glGenBuffers(1, &uvbuffer);
 	// 1rst attribute buffer : vertices
 	glEnableVertexAttribArray(0);
@@ -156,18 +158,26 @@ void Model::display() {
 		(void*)0                          // array buffer offset
 	);
 
-	// Draw the triangle !
+	int vertexColorLocation = glGetUniformLocation(ID, "uniformColor");
+	int modelViewMatrixLocation = glGetUniformLocation(ID, "model_view");
+	int projectionMatrixLocation = glGetUniformLocation(ID, "projection");
+	glUseProgram(ID);
+	glUniform4fv(vertexColorLocation, 1, glm::value_ptr(color));
+	glUniformMatrix4fv(modelViewMatrixLocation, 1, GL_FALSE, glm::value_ptr(modelmtx));
+	glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, glm::value_ptr(projmtx));
+
 	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	if (hiddenLineRemoval) {
-		setColor(color::DARKGRAY);
-		glPushMatrix();
-		glScalef(0.99, 0.99, 0.99);
+		glm::vec4 bgcolor = getColor(color::DARKGRAY);
+		glUniform4fv(vertexColorLocation, 1, glm::value_ptr(bgcolor));
+		glUniformMatrix4fv(modelViewMatrixLocation, 1, GL_FALSE, 
+			glm::value_ptr(glm::scale(modelmtx, glm::vec3(0.99, 0.99, 0.99))));
 		glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-		glPopMatrix();
 	}
+
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);

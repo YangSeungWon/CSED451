@@ -12,12 +12,10 @@ class Wheel
 {
 private:
 	float angle = 0;
-	static Model model;
 public:
-	Wheel() {
-		model.load();
-	}
-	void display();
+	Wheel() {}
+	static Model model;
+	void display(glm::mat4 modelmtx, glm::mat4 projmtx);
 	void increaseAngle(float _angle) { angle += _angle; }
 };
 
@@ -26,11 +24,9 @@ class Body
 private:
 	Wheel wheels[2 * NUM_WHEELS];
 	Duck* duck;
-	static Model model;
 public:
-	Body(Duck* _duck) : duck{ _duck } {
-		model.load();
-	}
-	void display();
+	Body(Duck* _duck) : duck{ _duck } {}
+	static Model model;
+	void display(glm::mat4 modelmtx, glm::mat4 projmtx);
 	void rotateWheel();
 };

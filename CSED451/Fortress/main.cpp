@@ -4,7 +4,13 @@
 #include <GL/glew.h>
 #include <GL/freeglut.h>
 #include <glm/vec3.hpp>
+#include <glm/mat4x4.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/string_cast.hpp>
 #include <vector>
+#include <fstream>
+#include <sstream>
+#include <string>
 #include "Duck.h"
 #include "Shell.h"
 #include "Ground.h"
@@ -20,6 +26,9 @@ Duck* deadDuck = nullptr;
 bool allPass = false;
 bool allFail = false;
 Ground ground;
+unsigned int ID;
+glm::mat4 modelmtx;
+glm::mat4 projmtx;
 
 view_t viewing_mode = view_t::THIRD_PERSON;
 bool hiddenLineRemoval = false;
@@ -34,6 +43,8 @@ void randomFire(int value);
 void randomMove(int value);
 bool checkCrash(Duck* duck);
 bool checkCrash(Shell* shell);
+void InitShader();
+void LoadOBJs();
 
 void main(int argc, char** argv) {
 	std::srand(static_cast<unsigned int>(std::time(0)));
@@ -51,6 +62,8 @@ void main(int argc, char** argv) {
 	glutTimerFunc(100, randomMove, 0);
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	glewInit();
+	InitShader();
+	LoadOBJs();
 	glutMainLoop();
 }
 
@@ -58,17 +71,16 @@ void reshape(int w, int h) {
 	int viewWidth = 1000;
 	int viewHeight = 1000;
 	glViewport((w - viewWidth) / 2, (h - viewHeight) / 2, viewWidth, viewHeight);
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	glMatrixMode(GL_MODELVIEW);
 }
 
 void renderScene(void) {
-	float duckAngle;
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	gluPerspective(90, 1, 0.1, 4333.0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
 
+	projmtx = glm::perspective(90.0, 1.0, 0.1, 4333.0);
+
+	float duckAngle;
 	glm::vec3 eyePos;
 	glm::vec3 eyeLookAt;
 	glm::vec3 cameraUp;
@@ -79,55 +91,34 @@ void renderScene(void) {
 		eyePos = blueDuck.getHeadPos() + glm::vec3(0, 30, 0) - (float)50 * duckOrientation;
 		eyeLookAt = blueDuck.getHeadPos();
 		cameraUp = glm::vec3(0, 1, 0);
-		gluLookAt(
-			eyePos.x, eyePos.y, eyePos.z,
-			eyeLookAt.x, eyeLookAt.y, eyeLookAt.z,
-			cameraUp.x, cameraUp.y, cameraUp.z
-		);
+		modelmtx = glm::lookAt(eyePos, eyeLookAt, cameraUp);
 		break;
 	case view_t::FIRST_PERSON:
 		eyePos = blueDuck.getHeadPos() + glm::vec3(0, 15, 0);
 		eyeLookAt = blueDuck.getBeakPos();
 		cameraUp = glm::vec3(0, 1, 0);
-		gluLookAt(
-			eyePos.x, eyePos.y, eyePos.z,
-			eyeLookAt.x, eyeLookAt.y, eyeLookAt.z,
-			cameraUp.x, cameraUp.y, cameraUp.z
-		);
+		modelmtx = glm::lookAt(eyePos, eyeLookAt, cameraUp);
 		break;
 	case view_t::TOP_VIEW:
-		gluLookAt(0, 400, 0, 0, 0, 0, 0, 0, -1);
+		modelmtx = glm::lookAt(
+			glm::vec3(0.0, 400.0, 0.0),
+			glm::vec3(0.0, 0.0, 0.0),
+			glm::vec3(0.0, 0.0, -1.0)
+		);
 		break;
 	}
 
-	// Clear the screen
-	glClearDepthf(1.0f);
-	glEnable(GL_DEPTH_TEST);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glShadeModel(GL_SMOOTH);
-
-	ground.display();
-	if (hiddenLineRemoval) {
-		glEnable(GL_CULL_FACE);
-	}
-	else {
-		glDisable(GL_CULL_FACE);
-	}
-
+	ground.display(modelmtx, projmtx);
+	/*
 	for (Shell* _shell : shells) {
 		glPushMatrix();
 		_shell->display();
 		glPopMatrix();
 	}
+	*/
+	blueDuck.display(modelmtx, projmtx);
+	whiteDuck.display(modelmtx, projmtx);
 
-	glPushMatrix();
-	blueDuck.display();
-	glPopMatrix();
-
-	glPushMatrix();
-	whiteDuck.display();
-	glPopMatrix();
-	
 	glutSwapBuffers();
 }
 
@@ -357,4 +348,88 @@ bool checkCrash(Shell* shell) {
 	}
 	
 	return false;
+}
+
+void InitShader() {
+	std::string vertexCode;
+	std::string fragmentCode;
+	std::ifstream vShaderFile;
+	std::ifstream fShaderFile;
+	// ifstream 객체들이 예외를 던질 수 있도록 합니다.
+	vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+	fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+	try
+	{
+		// 파일 열기
+		vShaderFile.open("shaders/vertexShader.vs");
+		fShaderFile.open("shaders/fragmentShader.fs");
+		std::stringstream vShaderStream, fShaderStream;
+		// stream에 파일의 버퍼 내용을 읽기
+		vShaderStream << vShaderFile.rdbuf();
+		fShaderStream << fShaderFile.rdbuf();
+		// 파일 핸들러 닫기
+		vShaderFile.close();
+		fShaderFile.close();
+		// stream을 string으로 변환
+		vertexCode = vShaderStream.str();
+		fragmentCode = fShaderStream.str();
+	}
+	catch (std::ifstream::failure e)
+	{
+		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
+	}
+	const char* vShaderCode = vertexCode.c_str();
+	const char* fShaderCode = fragmentCode.c_str();
+
+	unsigned int vertex, fragment;
+	int success;
+	char infoLog[512];
+
+	// vertex Shader
+	vertex = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertex, 1, &vShaderCode, NULL);
+	glCompileShader(vertex);
+	// 오류가 발생한다면 컴파일 오류를 출력
+	glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(vertex, 512, NULL, infoLog);
+		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+	};
+
+	// fragment Shader
+	fragment = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragment, 1, &fShaderCode, NULL);
+	glCompileShader(fragment);
+	// 오류가 발생한다면 컴파일 오류를 출력
+	glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(fragment, 512, NULL, infoLog);
+		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+	};
+
+	// shader Program
+	ID = glCreateProgram();
+	glAttachShader(ID, vertex);
+	glAttachShader(ID, fragment);
+	glLinkProgram(ID);
+	// 오류가 발생한다면 링킹 오류를 출력
+	glGetProgramiv(ID, GL_LINK_STATUS, &success);
+	if (!success)
+	{
+		glGetProgramInfoLog(ID, 512, NULL, infoLog);
+		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+	}
+
+	// program 내부에서 shader들이 링크 완료되었다면 이제 필요 없으므로 shader들을 삭제
+	glDeleteShader(vertex);
+	glDeleteShader(fragment);
+}
+
+void LoadOBJs() {
+	Head::model.load();
+	Body::model.load();
+	Beak::model.load();
+	Wheel::model.load();
 }

@@ -15,12 +15,12 @@ Shell::Shell(glm::vec3 _pos, glm::vec3 _velocity) {
 
 void Shell::display() {
 	float angle;
-	setColor(color::GREEN);
+	//setColor(color::GREEN);
 	glTranslatef(pos.x, pos.y, pos.z);
 	glutWireSphere(3.0, 5, 10);
 
 	if (hiddenLineRemoval) {
-		setColor(color::DARKGRAY);
+		//setColor(color::DARKGRAY);
 		glPushMatrix();
 		glScalef(0.99, 0.99, 0.99);
 		glutSolidSphere(3.0, 5, 10);
