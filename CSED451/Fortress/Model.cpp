@@ -14,10 +14,13 @@
 
 #include "utils.h"
 #include "Model.h"
+#include "Sun.h"
 
 extern bool hiddenLineRemoval;
 extern unsigned int ID;
-extern glm::vec4 lightPos;
+extern Sun sun;
+extern glm::vec4 lights[1000];
+extern int lightNumber;
 
 extern bool shadingMode;
 extern bool textureMode;
@@ -181,7 +184,9 @@ void Model::display(glm::vec4 color, glm::mat4 modelmtx, glm::mat4 projmtx) {
 
 	glUniformMatrix4fv(glGetUniformLocation(ID, "ModelView"), 1, GL_FALSE, glm::value_ptr(modelmtx));
 	glUniformMatrix4fv(glGetUniformLocation(ID, "Projection"), 1, GL_FALSE, glm::value_ptr(projmtx));
-	glUniform4fv(glGetUniformLocation(ID, "LightPosition"), 1, glm::value_ptr(lightPos));
+	glUniform4fv(glGetUniformLocation(ID, "DirectionalLightPosition"), 1, glm::value_ptr(sun.getPos()));
+	glUniform1i(glGetUniformLocation(ID, "LightNumber"), lightNumber);
+	glUniform4fv(glGetUniformLocation(ID, "PointLightList"), lightNumber, glm::value_ptr(lights[0]));
 
 	glm::vec4 light_ambient(0.2, 0.2, 0.2, 1.0);
 	glm::vec4 light_diffuse(1.0, 1.0, 1.0, 1.0);

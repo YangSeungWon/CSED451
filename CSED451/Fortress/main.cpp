@@ -15,6 +15,7 @@
 #include "Duck.h"
 #include "Shell.h"
 #include "Ground.h"
+#include "Sun.h"
 #include "constants.h"
 #include "utils.h"
 
@@ -24,6 +25,8 @@ float Duck::crash_radius = 20.0;
 Duck blueDuck(color::BLUE, -50.0, 0.0, 0.0, 0.0);
 Duck whiteDuck(color::PINK, 50.0, 0.0, 0.0, 180.0);
 std::vector<Shell*> shells;
+glm::vec4 lights[1000];
+int lightNumber = 0;
 bool isOver = false;
 Duck* deadDuck = nullptr;
 bool allPass = false;
@@ -32,7 +35,7 @@ Ground ground;
 unsigned int ID;
 glm::mat4 modelmtx;
 glm::mat4 projmtx;
-glm::vec4 lightPos = { 0.0, 20.0, 0.0, 1.0 };
+Sun sun;
 
 view_t viewing_mode = view_t::THIRD_PERSON;
 bool hiddenLineRemoval = false;
@@ -50,10 +53,11 @@ void randomFire(int value);
 void randomMove(int value);
 bool checkCrash(Duck* duck);
 bool checkCrash(Shell* shell);
-void InitShader(string vertexShaderStr, string fragmentShaderStr);
+void InitShader();
 void LoadOBJs();
 
 void main(int argc, char** argv) {
+	lights[lightNumber++] = glm::vec4(-100, 100, 0, 1);
 	std::srand(static_cast<unsigned int>(std::time(0)));
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH | GLUT_RGBA);
@@ -69,7 +73,7 @@ void main(int argc, char** argv) {
 	glutTimerFunc(100, randomMove, 0);
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	glewInit();
-	InitShader("shaders/GouraudVertexShader.hlsl", "shaders/GouraudFragmentShader.hlsl");
+	InitShader();
 	LoadOBJs();
 	glutMainLoop();
 }
@@ -169,29 +173,21 @@ void keyboard(unsigned char key, int x, int y) {
 			viewing_mode = view_t::THIRD_PERSON;
 		}
 		break;
-	case 'r':
-		hiddenLineRemoval = !hiddenLineRemoval;
-		break;
 	case 'x':
 		shadingMode = !shadingMode;
+		InitShader();
 		break;
 	case 't':
 		textureMode = !textureMode;
+		InitShader();
+		break;
+	case 'n':
+		normalMode = !normalMode;
+		InitShader();
+		break;
 	}
 
-	if (key == 'x' || key == 't') {
-		if (!shadingMode && !textureMode) {
-			InitShader("shaders/GouraudVertexShader.hlsl", "shaders/GouraudFragmentShader.hlsl");
-		}
-		else if (!shadingMode && textureMode) {
-			InitShader("shaders/GouraudVertexShader.hlsl", "shaders/GouraudTextureFragmentShader.hlsl");
-		}
-		else if (shadingMode && !textureMode) {
-			InitShader("shaders/PhongVertexShader.hlsl", "shaders/PhongFragmentShader.hlsl");
-		}
-		else {
-			InitShader("shaders/PhongVertexShader.hlsl", "shaders/PhongTextureFragmentShader.hlsl");
-		}
+	if (key == 'x' || key == 't' || key == 'n') {
 	}
 
 	glutPostRedisplay();
@@ -224,6 +220,7 @@ void specialkeyboard(int key, int x, int y) {
 void update(int value) {
 	glutPostRedisplay();
 	updateShell(value);
+	sun.move();
 
 	blueDuck.recoil();
 	whiteDuck.recoil();
@@ -376,11 +373,21 @@ bool checkCrash(Shell* shell) {
 	return false;
 }
 
-void InitShader(string vertexShaderStr, string fragmentShaderStr) {
+void InitShader() {
 	string vertexCode;
 	string fragmentCode;
 	std::ifstream vShaderFile;
 	std::ifstream fShaderFile;
+	string vertexShaderStr, fragmentShaderStr;
+
+	if (!shadingMode) {
+		vertexShaderStr = "shaders/GouraudVertexShader.hlsl";
+		fragmentShaderStr = "shaders/GouraudFragmentShader.hlsl";
+	}
+	else {
+		vertexShaderStr = "shaders/PhongVertexShader.hlsl";
+		fragmentShaderStr = "shaders/PhongFragmentShader.hlsl";
+	}
 
 	vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 	fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
