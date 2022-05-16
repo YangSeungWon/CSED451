@@ -19,6 +19,10 @@ extern bool hiddenLineRemoval;
 extern unsigned int ID;
 extern glm::vec4 lightPos;
 
+extern bool shadingMode;
+extern bool textureMode;
+extern bool normalMode;
+
 // Very, VERY simple OBJ loader.
 // Here is a short list of features a real function would provide : 
 // - Binary files. Reading a model should be just a few memcpy's away, not parsing a file at runtime. In short : OBJ is not very great.
@@ -174,7 +178,7 @@ void Model::display(glm::vec4 color, glm::mat4 modelmtx, glm::mat4 projmtx) {
 	);
 
 	glUseProgram(ID);
-	glUniform4fv(glGetUniformLocation(ID, "uniformColor"), 1, glm::value_ptr(color));
+
 	glUniformMatrix4fv(glGetUniformLocation(ID, "ModelView"), 1, GL_FALSE, glm::value_ptr(modelmtx));
 	glUniformMatrix4fv(glGetUniformLocation(ID, "Projection"), 1, GL_FALSE, glm::value_ptr(projmtx));
 	glUniform4fv(glGetUniformLocation(ID, "LightPosition"), 1, glm::value_ptr(lightPos));

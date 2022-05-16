@@ -29,10 +29,13 @@ Ground ground;
 unsigned int ID;
 glm::mat4 modelmtx;
 glm::mat4 projmtx;
-glm::vec4 lightPos = { 0.0, 200.0, 0.0, 0.0 };
+glm::vec4 lightPos = { 0.0, 20.0, 0.0, 1.0 };
 
 view_t viewing_mode = view_t::THIRD_PERSON;
 bool hiddenLineRemoval = false;
+bool shadingMode = false;	// Gouraud = flase, Phong = true
+bool textureMode = false;
+bool normalMode = false;
 
 void reshape(int w, int h);
 void renderScene(void);
@@ -359,8 +362,8 @@ void InitShader() {
 	fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 	try
 	{
-		vShaderFile.open("shaders/vertexShader.hlsl");
-		fShaderFile.open("shaders/fragmentShader.hlsl");
+		vShaderFile.open("shaders/PhongVertexShader.hlsl");
+		fShaderFile.open("shaders/PhongFragmentShader.hlsl");
 		std::stringstream vShaderStream, fShaderStream;
 
 		vShaderStream << vShaderFile.rdbuf();

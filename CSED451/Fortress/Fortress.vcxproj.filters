@@ -81,7 +81,9 @@
     </Object>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\vertexShader.hlsl" />
-    <None Include="shaders\fragmentShader.hlsl" />
+    <None Include="shaders\GouraudVertexShader.hlsl" />
+    <None Include="shaders\GouraudFragmentShader.hlsl" />
+    <None Include="shaders\PhongFragmentShader.hlsl" />
+    <None Include="shaders\PhongVertexShader.hlsl" />
   </ItemGroup>
 </Project>
