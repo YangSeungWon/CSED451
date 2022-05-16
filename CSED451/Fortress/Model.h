@@ -16,6 +16,7 @@ private:
 	bool loadOBJ();
 	GLuint vertexbuffer;
 	GLuint uvbuffer;
+	GLuint normalbuffer;
 public:
 	Model(const char* _path) : path(_path) { }
 	bool load();

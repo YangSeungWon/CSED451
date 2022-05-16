@@ -29,6 +29,7 @@ Ground ground;
 unsigned int ID;
 glm::mat4 modelmtx;
 glm::mat4 projmtx;
+glm::vec4 lightPos = { 0.0, 200.0, 0.0, 0.0 };
 
 view_t viewing_mode = view_t::THIRD_PERSON;
 bool hiddenLineRemoval = false;
@@ -358,8 +359,8 @@ void InitShader() {
 	fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 	try
 	{
-		vShaderFile.open("shaders/vertexShader.vs");
-		fShaderFile.open("shaders/fragmentShader.fs");
+		vShaderFile.open("shaders/vertexShader.hlsl");
+		fShaderFile.open("shaders/fragmentShader.hlsl");
 		std::stringstream vShaderStream, fShaderStream;
 
 		vShaderStream << vShaderFile.rdbuf();

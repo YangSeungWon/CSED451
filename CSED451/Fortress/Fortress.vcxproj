@@ -197,8 +197,8 @@
     </Object>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\fragmentShader.fs" />
-    <None Include="shaders\vertexShader.vs" />
+    <None Include="shaders\fragmentShader.hlsl" />
+    <None Include="shaders\vertexShader.hlsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

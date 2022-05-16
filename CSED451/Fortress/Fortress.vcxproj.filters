@@ -81,7 +81,7 @@
     </Object>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\vertexShader.vs" />
-    <None Include="shaders\fragmentShader.fs" />
+    <None Include="shaders\vertexShader.hlsl" />
+    <None Include="shaders\fragmentShader.hlsl" />
   </ItemGroup>
 </Project>

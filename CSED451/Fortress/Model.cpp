@@ -17,6 +17,7 @@
 
 extern bool hiddenLineRemoval;
 extern unsigned int ID;
+extern glm::vec4 lightPos;
 
 // Very, VERY simple OBJ loader.
 // Here is a short list of features a real function would provide : 
@@ -132,7 +133,8 @@ void Model::display(glm::vec4 color, glm::mat4 modelmtx, glm::mat4 projmtx) {
 	// Buffer binding
 	glGenBuffers(1, &vertexbuffer);
 	glGenBuffers(1, &uvbuffer);
-	// 1rst attribute buffer : vertices
+	glGenBuffers(1, &normalbuffer);
+	// 1st attribute buffer : vertices
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
 	glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(glm::vec3), &vertices[0], GL_STATIC_DRAW);
@@ -158,25 +160,51 @@ void Model::display(glm::vec4 color, glm::mat4 modelmtx, glm::mat4 projmtx) {
 		(void*)0                          // array buffer offset
 	);
 
-	int vertexColorLocation = glGetUniformLocation(ID, "uniformColor");
-	int modelViewMatrixLocation = glGetUniformLocation(ID, "model_view");
-	int projectionMatrixLocation = glGetUniformLocation(ID, "projection");
-	glUseProgram(ID);
-	glUniform4fv(vertexColorLocation, 1, glm::value_ptr(color));
-	glUniformMatrix4fv(modelViewMatrixLocation, 1, GL_FALSE, glm::value_ptr(modelmtx));
-	glUniformMatrix4fv(projectionMatrixLocation, 1, GL_FALSE, glm::value_ptr(projmtx));
+	// 3rd attribute buffer : normals
+	glEnableVertexAttribArray(2);
+	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
+	glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(glm::vec3), &normals[0], GL_STATIC_DRAW);
+	glVertexAttribPointer(
+		2,                  // attribute
+		3,                  // size
+		GL_FLOAT,           // type
+		GL_TRUE,           // normalized?
+		0,                  // stride
+		(void*)0            // array buffer offset
+	);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glUseProgram(ID);
+	glUniform4fv(glGetUniformLocation(ID, "uniformColor"), 1, glm::value_ptr(color));
+	glUniformMatrix4fv(glGetUniformLocation(ID, "ModelView"), 1, GL_FALSE, glm::value_ptr(modelmtx));
+	glUniformMatrix4fv(glGetUniformLocation(ID, "Projection"), 1, GL_FALSE, glm::value_ptr(projmtx));
+	glUniform4fv(glGetUniformLocation(ID, "LightPosition"), 1, glm::value_ptr(lightPos));
+
+	glm::vec4 light_ambient(0.2, 0.2, 0.2, 1.0);
+	glm::vec4 light_diffuse(1.0, 1.0, 1.0, 1.0);
+	glm::vec4 light_specular(1.0, 1.0, 1.0, 1.0);
+	glm::vec4 material_ambient(1.0, 0.0, 1.0, 1.0);
+	glm::vec4 material_diffuse(1.0, 0.8, 0.0, 1.0);
+	glm::vec4 material_specular(1.0, 0.0, 1.0, 1.0);
+	float material_shininess = 5.0;
+	glm::vec4 ambient_product = light_ambient * material_ambient;
+	glm::vec4 diffuse_product = light_diffuse * material_diffuse;
+	glm::vec4 specular_product = light_specular * material_specular;
+	glUniform4fv(glGetUniformLocation(ID, "AmbientProduct"), 1, glm::value_ptr(ambient_product));
+	glUniform4fv(glGetUniformLocation(ID, "DiffuseProduct"), 1, glm::value_ptr(diffuse_product));
+	glUniform4fv(glGetUniformLocation(ID, "SpecularProduct"), 1, glm::value_ptr(specular_product));
+	glUniform1f(glGetUniformLocation(ID, "Shininess"), material_shininess);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
+	/*
 	if (hiddenLineRemoval) {
 		glm::vec4 bgcolor = getColor(color::DARKGRAY);
-		glUniform4fv(vertexColorLocation, 1, glm::value_ptr(bgcolor));
-		glUniformMatrix4fv(modelViewMatrixLocation, 1, GL_FALSE, 
+		glUniform4fv(glGetUniformLocation(ID, "uniformColor"), 1, glm::value_ptr(bgcolor));
+		glUniformMatrix4fv(glGetUniformLocation(ID, "ModelView"), 1, GL_FALSE,
 			glm::value_ptr(glm::scale(modelmtx, glm::vec3(0.99, 0.99, 0.99))));
 		glDrawArrays(GL_TRIANGLES, 0, vertices.size());
-	}
+	}*/
 
 
 	glDisableVertexAttribArray(0);
