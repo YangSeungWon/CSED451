@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstdlib>
+#include <string>
 #include <ctime>
 #include <GL/glew.h>
 #include <GL/freeglut.h>
@@ -16,6 +17,8 @@
 #include "Ground.h"
 #include "constants.h"
 #include "utils.h"
+
+using std::string;
 
 float Duck::crash_radius = 20.0;
 Duck blueDuck(color::BLUE, -50.0, 0.0, 0.0, 0.0);
@@ -47,7 +50,7 @@ void randomFire(int value);
 void randomMove(int value);
 bool checkCrash(Duck* duck);
 bool checkCrash(Shell* shell);
-void InitShader();
+void InitShader(string vertexShaderStr, string fragmentShaderStr);
 void LoadOBJs();
 
 void main(int argc, char** argv) {
@@ -66,7 +69,7 @@ void main(int argc, char** argv) {
 	glutTimerFunc(100, randomMove, 0);
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	glewInit();
-	InitShader();
+	InitShader("shaders/GouraudVertexShader.hlsl", "shaders/GouraudFragmentShader.hlsl");
 	LoadOBJs();
 	glutMainLoop();
 }
@@ -169,7 +172,28 @@ void keyboard(unsigned char key, int x, int y) {
 	case 'r':
 		hiddenLineRemoval = !hiddenLineRemoval;
 		break;
+	case 'x':
+		shadingMode = !shadingMode;
+		break;
+	case 't':
+		textureMode = !textureMode;
 	}
+
+	if (key == 'x' || key == 't') {
+		if (!shadingMode && !textureMode) {
+			InitShader("shaders/GouraudVertexShader.hlsl", "shaders/GouraudFragmentShader.hlsl");
+		}
+		else if (!shadingMode && textureMode) {
+			InitShader("shaders/GouraudVertexShader.hlsl", "shaders/GouraudTextureFragmentShader.hlsl");
+		}
+		else if (shadingMode && !textureMode) {
+			InitShader("shaders/PhongVertexShader.hlsl", "shaders/PhongFragmentShader.hlsl");
+		}
+		else {
+			InitShader("shaders/PhongVertexShader.hlsl", "shaders/PhongTextureFragmentShader.hlsl");
+		}
+	}
+
 	glutPostRedisplay();
 }
 
@@ -352,9 +376,9 @@ bool checkCrash(Shell* shell) {
 	return false;
 }
 
-void InitShader() {
-	std::string vertexCode;
-	std::string fragmentCode;
+void InitShader(string vertexShaderStr, string fragmentShaderStr) {
+	string vertexCode;
+	string fragmentCode;
 	std::ifstream vShaderFile;
 	std::ifstream fShaderFile;
 
@@ -362,8 +386,8 @@ void InitShader() {
 	fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 	try
 	{
-		vShaderFile.open("shaders/PhongVertexShader.hlsl");
-		fShaderFile.open("shaders/PhongFragmentShader.hlsl");
+		vShaderFile.open(vertexShaderStr);
+		fShaderFile.open(fragmentShaderStr);
 		std::stringstream vShaderStream, fShaderStream;
 
 		vShaderStream << vShaderFile.rdbuf();
