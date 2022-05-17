@@ -8,7 +8,7 @@ uniform vec4 Color;
 
 void main()
 {
-    FragColor = color;
+    FragColor = color * Color;
     if (isTexture) {
         FragColor = color * texture2D(texture, texCoord) * Color;
     }
