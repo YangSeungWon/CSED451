@@ -5,6 +5,7 @@
 #include <glm/vec3.hpp>
 #include <glm/vec2.hpp>
 #include <GL/glew.h>
+#include "constants.h"
 
 class Model {
 private:
@@ -14,11 +15,12 @@ private:
 	const char* path;
 	bool isLoaded = false;
 	bool loadOBJ();
+	texture_t textureIdx;
 	GLuint vertexbuffer;
 	GLuint uvbuffer;
 	GLuint normalbuffer;
 public:
-	Model(const char* _path) : path(_path) { }
+	Model(const char* _path, texture_t _textureIdx) : path(_path), textureIdx(_textureIdx) { }
 	bool load();
 	void display(glm::vec4 color, glm::mat4 modelmtx, glm::mat4 projmtx);
 	void setModel(std::vector<glm::vec3> _vertices,

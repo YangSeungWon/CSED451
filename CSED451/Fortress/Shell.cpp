@@ -11,7 +11,7 @@
 
 extern bool hiddenLineRemoval;
 
-Model Shell::model = Model("resources/shell.obj");
+Model Shell::model = Model("resources/shell.obj", texture_t::SHELL);
 
 Shell::Shell(glm::vec3 _pos, glm::vec3 _velocity) {
 	pos = _pos;

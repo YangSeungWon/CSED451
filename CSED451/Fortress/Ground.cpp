@@ -9,8 +9,9 @@
 #include "Ground.h"
 #include "Model.h"
 #include "utils.h"
+#include "constants.h"
 
-Model Ground::model = Model("");
+Model Ground::model = Model("", texture_t::GROUND);
 
 Ground::Ground() {
 	std::vector<glm::vec3> vertices;

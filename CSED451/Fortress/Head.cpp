@@ -13,7 +13,7 @@
 #include "utils.h"
 #include "Model.h"
 
-Model Head::model = Model("resources/head.obj");
+Model Head::model = Model("resources/head.obj", texture_t::DUCK);
 
 void Head::display(glm::mat4 modelmtx, glm::mat4 projmtx) {
 	glm::vec4 color4 = getColor(duck->getColorBody());
@@ -26,7 +26,7 @@ unsigned int Head::fire() {
 }
 
 extern std::vector<Shell*> shells;
-Model Beak::model = Model("resources/beak.obj");
+Model Beak::model = Model("resources/beak.obj", texture_t::DUCK);
 
 void Beak::display(glm::mat4 modelmtx, glm::mat4 projmtx) {
 	glm::mat4 beakModelmtx = modelmtx;

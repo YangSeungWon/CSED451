@@ -15,8 +15,8 @@
 extern bool hiddenLineRemoval;
 extern unsigned int ID;
 
-Model Body::model = Model("resources/body.obj");
-Model Body::lifemodel = Model("resources/life.obj");
+Model Body::model = Model("resources/body.obj", texture_t::DUCK);
+Model Body::lifemodel = Model("resources/life.obj", texture_t::SHELL);
 
 void Body::display(glm::mat4 modelmtx, glm::mat4 projmtx) {
 	// body
@@ -53,7 +53,7 @@ void Body::rotateWheel() {
 	}
 }
 
-Model Wheel::model = Model("resources/wheel.obj");
+Model Wheel::model = Model("resources/wheel.obj", texture_t::DUCK);
 
 void Wheel::display(glm::mat4 modelmtx, glm::mat4 projmtx) {
 	glm::mat4 wheelModelmtx = modelmtx;

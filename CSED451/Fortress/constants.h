@@ -27,3 +27,9 @@ typedef enum class view_t {
 	FIRST_PERSON,
 	TOP_VIEW,
 } view_t;
+
+typedef enum class texture_t {
+	GROUND,
+	DUCK,
+	SHELL,
+} texture_t;

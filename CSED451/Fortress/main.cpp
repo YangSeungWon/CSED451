@@ -37,7 +37,7 @@ glm::mat4 modelmtx;
 glm::mat4 viewmtx;
 glm::mat4 projmtx;
 Sun sun;
-GLuint textures[1];
+GLuint textures[3];
 
 view_t viewing_mode = view_t::THIRD_PERSON;
 bool hiddenLineRemoval = false;
@@ -56,6 +56,7 @@ void randomMove(int value);
 bool checkCrash(Duck* duck);
 bool checkCrash(Shell* shell);
 void InitShader();
+void loadTexture(int idx, const char* path);
 void InitTexture();
 void LoadOBJs();
 
@@ -458,25 +459,28 @@ void InitShader() {
 	glDeleteShader(fragment);
 }
 
-void InitTexture() {
-	glGenTextures(1, textures);
-	glBindTexture(GL_TEXTURE_2D, textures[0]);
+void loadTexture(int idx, const char* path) {
+	glBindTexture(GL_TEXTURE_2D, textures[idx]);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 	int imgWidth, imgHeight, imgChannels;
-	unsigned char* data = stbi_load("resources/GroundTexture.jpg", &imgWidth, &imgHeight, &imgChannels, 0);
+	unsigned char* data = stbi_load(path, &imgWidth, &imgHeight, &imgChannels, 0);
 	if (!data) {
 		std::cout << "ERROR::TEXTURE::LOADING_FAILED\n" << std::endl;
 	}
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imgWidth, imgHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	stbi_image_free(data);
+}
 
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, textures[0]);
+void InitTexture() {
+	glGenTextures(3, textures);
+	loadTexture(0, "resources/GroundTexture.jpg");
+	loadTexture(1, "resources/DuckTexture.jpg");
+	loadTexture(2, "resources/ShellTexture.jpg");
 }
 
 void LoadOBJs() {
