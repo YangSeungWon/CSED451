@@ -25,7 +25,7 @@ float Duck::crash_radius = 20.0;
 Duck blueDuck(color::BLUE, -50.0, 0.0, 0.0, 0.0);
 Duck whiteDuck(color::PINK, 50.0, 0.0, 0.0, 180.0);
 std::vector<Shell*> shells;
-glm::vec4 lights[1000];
+glm::vec4 lights[10];
 int lightNumber = 0;
 bool isOver = false;
 Duck* deadDuck = nullptr;
@@ -34,6 +34,7 @@ bool allFail = false;
 Ground ground;
 unsigned int ID;
 glm::mat4 modelmtx;
+glm::mat4 viewmtx;
 glm::mat4 projmtx;
 Sun sun;
 
@@ -103,12 +104,14 @@ void renderScene(void) {
 		eyeLookAt = blueDuck.getHeadPos();
 		cameraUp = glm::vec3(0, 1, 0);
 		modelmtx = glm::lookAt(eyePos, eyeLookAt, cameraUp);
+		viewmtx = modelmtx;
 		break;
 	case view_t::FIRST_PERSON:
 		eyePos = blueDuck.getHeadPos() + glm::vec3(0, 15, 0);
 		eyeLookAt = blueDuck.getBeakPos();
 		cameraUp = glm::vec3(0, 1, 0);
 		modelmtx = glm::lookAt(eyePos, eyeLookAt, cameraUp);
+		viewmtx = modelmtx;
 		break;
 	case view_t::TOP_VIEW:
 		modelmtx = glm::lookAt(
@@ -116,6 +119,7 @@ void renderScene(void) {
 			glm::vec3(0.0, 0.0, 0.0),
 			glm::vec3(0.0, 0.0, -1.0)
 		);
+		viewmtx = modelmtx;
 		break;
 	}
 

@@ -19,12 +19,13 @@
 extern bool hiddenLineRemoval;
 extern unsigned int ID;
 extern Sun sun;
-extern glm::vec4 lights[1000];
+extern glm::vec4 lights[10];
 extern int lightNumber;
 
 extern bool shadingMode;
 extern bool textureMode;
 extern bool normalMode;
+extern glm::mat4 viewmtx;
 
 // Very, VERY simple OBJ loader.
 // Here is a short list of features a real function would provide : 
@@ -184,6 +185,7 @@ void Model::display(glm::vec4 color, glm::mat4 modelmtx, glm::mat4 projmtx) {
 
 	glUniformMatrix4fv(glGetUniformLocation(ID, "ModelView"), 1, GL_FALSE, glm::value_ptr(modelmtx));
 	glUniformMatrix4fv(glGetUniformLocation(ID, "Projection"), 1, GL_FALSE, glm::value_ptr(projmtx));
+	glUniformMatrix4fv(glGetUniformLocation(ID, "View"), 1, GL_FALSE, glm::value_ptr(viewmtx));
 	glUniform4fv(glGetUniformLocation(ID, "DirectionalLightPosition"), 1, glm::value_ptr(sun.getPos()));
 	glUniform1i(glGetUniformLocation(ID, "LightNumber"), lightNumber);
 	glUniform4fv(glGetUniformLocation(ID, "PointLightList"), lightNumber, glm::value_ptr(lights[0]));

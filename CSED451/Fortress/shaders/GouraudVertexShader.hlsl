@@ -4,10 +4,11 @@ layout (location = 2) in vec3 vNormal;
 out vec4 color;
 
 uniform mat4 ModelView;
+uniform mat4 View;
 uniform mat4 Projection;
 uniform vec4 DirectionalLightPosition;
 uniform int LightNumber;
-uniform vec4 PointLightList[1000];
+uniform vec4 PointLightList[10];
 uniform float Shininess;
 uniform vec4 AmbientProduct;
 uniform vec4 DiffuseProduct;
@@ -60,11 +61,11 @@ void main()
     vec4 ambient = AmbientProduct;
     
 	color = ambient;
-    //color += calculateLightColor(pos, DirectionalLightPosition, 1.0);
+    color += calculateLightColor(pos, View * DirectionalLightPosition, 1.0);
     
     for (int i = 0; i < LightNumber; i++)
     {
-        color += calculateLightColor(pos, PointLightList[i], 50.0);
+        color += calculateLightColor(pos, View * PointLightList[i], 50.0);
     }
     color.a = 1.0;
 }
