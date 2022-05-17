@@ -199,9 +199,9 @@ void Model::display(glm::vec4 color, glm::mat4 modelmtx, glm::mat4 projmtx) {
 	glm::vec4 light_ambient(0.2, 0.2, 0.2, 1.0);
 	glm::vec4 light_diffuse(1.0, 1.0, 1.0, 1.0);
 	glm::vec4 light_specular(1.0, 1.0, 1.0, 1.0);
-	glm::vec4 material_ambient(1.0, 0.0, 1.0, 1.0);
-	glm::vec4 material_diffuse(1.0, 0.8, 0.0, 1.0);
-	glm::vec4 material_specular(1.0, 0.0, 1.0, 1.0);
+	glm::vec4 material_ambient(1.0, 1.0, 1.0, 1.0);
+	glm::vec4 material_diffuse(1.0, 1.0, 1.0, 1.0);
+	glm::vec4 material_specular(1.0, 1.0, 1.0, 1.0);
 	float material_shininess = 5.0;
 	glm::vec4 ambient_product = light_ambient * material_ambient;
 	glm::vec4 diffuse_product = light_diffuse * material_diffuse;
@@ -212,6 +212,8 @@ void Model::display(glm::vec4 color, glm::mat4 modelmtx, glm::mat4 projmtx) {
 	glUniform1f(glGetUniformLocation(ID, "Shininess"), material_shininess);
 	glUniform1i(glGetUniformLocation(ID, "isTexture"), textureMode);
 	glUniform1i(glGetUniformLocation(ID, "isNormalMap"), normalMode && (textureIdx == texture_t::GROUND));
+	glUniform4fv(glGetUniformLocation(ID, "Color"), 1, glm::value_ptr(color));
+	
 
 	switch (textureIdx) {
 	case texture_t::GROUND:

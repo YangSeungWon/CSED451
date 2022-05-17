@@ -7,6 +7,7 @@ uniform bool isTexture;
 uniform sampler2D texture;
 uniform bool isNormalMap;
 uniform sampler2D normalMap;
+uniform vec4 Color;
 
 uniform float Shininess;
 uniform vec4 AmbientProduct;
@@ -68,6 +69,7 @@ void main()
         fragcolor += calculateLightColor(fL, 50.0, false);
     }
 	fragcolor.a = 1.0;
+    fragcolor *= Color;
     if (isTexture) {
         fragcolor = fragcolor * texture2D(texture, texCoord);
     }
