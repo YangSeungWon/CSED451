@@ -18,6 +18,8 @@
 #include "Sun.h"
 #include "constants.h"
 #include "utils.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image.h>
 
 using std::string;
 
@@ -35,6 +37,7 @@ glm::mat4 modelmtx;
 glm::mat4 viewmtx;
 glm::mat4 projmtx;
 Sun sun;
+GLuint textures[1];
 
 view_t viewing_mode = view_t::THIRD_PERSON;
 bool hiddenLineRemoval = false;
@@ -53,6 +56,7 @@ void randomMove(int value);
 bool checkCrash(Duck* duck);
 bool checkCrash(Shell* shell);
 void InitShader();
+void InitTexture();
 void LoadOBJs();
 
 void main(int argc, char** argv) {
@@ -72,6 +76,7 @@ void main(int argc, char** argv) {
 	glClearColor(0.3f, 0.3f, 0.3f, 1.0f);
 	glewInit();
 	InitShader();
+	InitTexture();
 	LoadOBJs();
 	glutMainLoop();
 }
@@ -451,6 +456,27 @@ void InitShader() {
 
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
+}
+
+void InitTexture() {
+	glGenTextures(1, textures);
+	glBindTexture(GL_TEXTURE_2D, textures[0]);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+	int imgWidth, imgHeight, imgChannels;
+	unsigned char* data = stbi_load("resources/GroundTexture.jpg", &imgWidth, &imgHeight, &imgChannels, 0);
+	if (!data) {
+		std::cout << "ERROR::TEXTURE::LOADING_FAILED\n" << std::endl;
+	}
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imgWidth, imgHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	stbi_image_free(data);
+
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, textures[0]);
 }
 
 void LoadOBJs() {

@@ -25,11 +25,11 @@ Ground::Ground() {
 			vertices.push_back(glm::vec3((i + 1) * interval, 0, (j + 1) * interval));
 			vertices.push_back(glm::vec3((i + 1) * interval, 0, j * interval));
 			uvs.push_back(glm::vec2(0, 0));
-			uvs.push_back(glm::vec2(0, 0));
-			uvs.push_back(glm::vec2(0, 0));
-			uvs.push_back(glm::vec2(0, 0));
-			uvs.push_back(glm::vec2(0, 0));
-			uvs.push_back(glm::vec2(0, 0));
+			uvs.push_back(glm::vec2(0, 1));
+			uvs.push_back(glm::vec2(1, 0));
+			uvs.push_back(glm::vec2(0, 1));
+			uvs.push_back(glm::vec2(1, 1));
+			uvs.push_back(glm::vec2(1, 0));
 			normals.push_back(glm::vec3(0, 1, 0));
 			normals.push_back(glm::vec3(0, 1, 0));
 			normals.push_back(glm::vec3(0, 1, 0));

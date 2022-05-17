@@ -26,6 +26,7 @@ extern bool shadingMode;
 extern bool textureMode;
 extern bool normalMode;
 extern glm::mat4 viewmtx;
+extern GLuint textures;
 
 // Very, VERY simple OBJ loader.
 // Here is a short list of features a real function would provide : 
@@ -209,6 +210,7 @@ void Model::display(glm::vec4 color, glm::mat4 modelmtx, glm::mat4 projmtx) {
 	glUniform4fv(glGetUniformLocation(ID, "DiffuseProduct"), 1, glm::value_ptr(diffuse_product));
 	glUniform4fv(glGetUniformLocation(ID, "SpecularProduct"), 1, glm::value_ptr(specular_product));
 	glUniform1f(glGetUniformLocation(ID, "Shininess"), material_shininess);
+
 
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
