@@ -41,8 +41,8 @@ GLuint textures[3];
 
 view_t viewing_mode = view_t::THIRD_PERSON;
 bool hiddenLineRemoval = false;
-bool shadingMode = false;	// Gouraud = flase, Phong = true
-bool textureMode = false;
+bool shadingMode = false;	// Gouraud = false, Phong = true
+bool textureMode = true;
 bool normalMode = false;
 
 void reshape(int w, int h);

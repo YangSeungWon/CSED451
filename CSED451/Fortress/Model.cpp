@@ -210,6 +210,7 @@ void Model::display(glm::vec4 color, glm::mat4 modelmtx, glm::mat4 projmtx) {
 	glUniform4fv(glGetUniformLocation(ID, "DiffuseProduct"), 1, glm::value_ptr(diffuse_product));
 	glUniform4fv(glGetUniformLocation(ID, "SpecularProduct"), 1, glm::value_ptr(specular_product));
 	glUniform1f(glGetUniformLocation(ID, "Shininess"), material_shininess);
+	glUniform1i(glGetUniformLocation(ID, "isTexture"), textureMode);
 
 	switch (textureIdx) {
 	case texture_t::GROUND:

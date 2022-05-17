@@ -3,6 +3,7 @@ in vec3 fN;
 in vec3 fE;
 out vec4 fragcolor;
 in vec2 texCoord;
+uniform bool isTexture;
 uniform sampler2D texture;
 
 uniform float Shininess;
@@ -59,5 +60,7 @@ void main()
         fragcolor += calculateLightColor(fL, 50.0, false);
     }
 	fragcolor.a = 1.0;
-    fragcolor = fragcolor * texture2D(texture, texCoord);
+    if (isTexture) {
+        fragcolor = fragcolor * texture2D(texture, texCoord);
+    }
 }
