@@ -25,8 +25,6 @@ float Duck::crash_radius = 20.0;
 Duck blueDuck(color::BLUE, -50.0, 0.0, 0.0, 0.0);
 Duck whiteDuck(color::PINK, 50.0, 0.0, 0.0, 180.0);
 std::vector<Shell*> shells;
-glm::vec4 lights[10];
-int lightNumber = 0;
 bool isOver = false;
 Duck* deadDuck = nullptr;
 bool allPass = false;
@@ -58,7 +56,6 @@ void InitShader();
 void LoadOBJs();
 
 void main(int argc, char** argv) {
-	lights[lightNumber++] = glm::vec4(-100, 100, 0, 1);
 	std::srand(static_cast<unsigned int>(std::time(0)));
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_DEPTH | GLUT_RGBA);

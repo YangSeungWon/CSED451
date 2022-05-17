@@ -13,7 +13,6 @@
 #include "utils.h"
 #include "Model.h"
 
-
 Model Head::model = Model("resources/head.obj");
 
 void Head::display(glm::mat4 modelmtx, glm::mat4 projmtx) {

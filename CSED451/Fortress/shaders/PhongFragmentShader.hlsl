@@ -49,7 +49,7 @@ void main()
     
     vec3 fL;
     fL = (View * DirectionalLightPosition).xyz - fE;
-    //fragcolor += calculateLightColor(fL, 1.0, true);
+    fragcolor += calculateLightColor(fL, 1.0, true);
     
     for (int i = 0; i < LightNumber; i++)
     {

@@ -15,12 +15,12 @@
 #include "utils.h"
 #include "Model.h"
 #include "Sun.h"
+#include "Shell.h"
 
 extern bool hiddenLineRemoval;
 extern unsigned int ID;
 extern Sun sun;
-extern glm::vec4 lights[10];
-extern int lightNumber;
+extern std::vector<Shell*> shells;
 
 extern bool shadingMode;
 extern bool textureMode;
@@ -187,8 +187,13 @@ void Model::display(glm::vec4 color, glm::mat4 modelmtx, glm::mat4 projmtx) {
 	glUniformMatrix4fv(glGetUniformLocation(ID, "Projection"), 1, GL_FALSE, glm::value_ptr(projmtx));
 	glUniformMatrix4fv(glGetUniformLocation(ID, "View"), 1, GL_FALSE, glm::value_ptr(viewmtx));
 	glUniform4fv(glGetUniformLocation(ID, "DirectionalLightPosition"), 1, glm::value_ptr(sun.getPos()));
-	glUniform1i(glGetUniformLocation(ID, "LightNumber"), lightNumber);
-	glUniform4fv(glGetUniformLocation(ID, "PointLightList"), lightNumber, glm::value_ptr(lights[0]));
+	glUniform1i(glGetUniformLocation(ID, "LightNumber"), shells.size());
+
+	glm::vec4 lights[10];
+	for (int i = 0; i < shells.size(); i++) {
+		lights[i] = glm::vec4(shells[i]->getPos() + glm::vec3(0.0, 5.0, 0.0), 1.0);
+	}
+	glUniform4fv(glGetUniformLocation(ID, "PointLightList"), shells.size(), glm::value_ptr(lights[0]));
 
 	glm::vec4 light_ambient(0.2, 0.2, 0.2, 1.0);
 	glm::vec4 light_diffuse(1.0, 1.0, 1.0, 1.0);
