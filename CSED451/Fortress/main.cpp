@@ -37,7 +37,7 @@ glm::mat4 modelmtx;
 glm::mat4 viewmtx;
 glm::mat4 projmtx;
 Sun sun;
-GLuint textures[3];
+GLuint textures[4];
 
 view_t viewing_mode = view_t::THIRD_PERSON;
 bool hiddenLineRemoval = false;
@@ -477,10 +477,11 @@ void loadTexture(int idx, const char* path) {
 }
 
 void InitTexture() {
-	glGenTextures(3, textures);
+	glGenTextures(4, textures);
 	loadTexture(0, "resources/GroundTexture.jpg");
 	loadTexture(1, "resources/DuckTexture.jpg");
 	loadTexture(2, "resources/ShellTexture.jpg");
+	loadTexture(3, "resources/GroundNormal.jpg");
 }
 
 void LoadOBJs() {

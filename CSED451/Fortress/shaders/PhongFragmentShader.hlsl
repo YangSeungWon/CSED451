@@ -5,6 +5,8 @@ out vec4 fragcolor;
 in vec2 texCoord;
 uniform bool isTexture;
 uniform sampler2D texture;
+uniform bool isNormalMap;
+uniform sampler2D normalMap;
 
 uniform float Shininess;
 uniform vec4 AmbientProduct;
@@ -20,7 +22,13 @@ uniform vec4 PointLightList[10];
 
 vec4 calculateLightColor(vec3 fL, float brightness, bool directional)
 {
+
     vec3 N = normalize(fN);
+    if (isNormalMap) {
+        vec3 normal = texture2D(normalMap, texCoord).rgb;
+        normal = normalize(2.0 * normal - 1.0);
+        N = normalize(5.0 * N + normal);
+    }
     vec3 E = normalize(fE);
     vec3 L = normalize(fL);
     vec3 H = normalize(L + E);

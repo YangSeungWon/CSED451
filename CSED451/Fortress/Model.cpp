@@ -26,7 +26,7 @@ extern bool shadingMode;
 extern bool textureMode;
 extern bool normalMode;
 extern glm::mat4 viewmtx;
-extern GLuint textures[3];
+extern GLuint textures[4];
 
 // Very, VERY simple OBJ loader.
 // Here is a short list of features a real function would provide : 
@@ -211,11 +211,14 @@ void Model::display(glm::vec4 color, glm::mat4 modelmtx, glm::mat4 projmtx) {
 	glUniform4fv(glGetUniformLocation(ID, "SpecularProduct"), 1, glm::value_ptr(specular_product));
 	glUniform1f(glGetUniformLocation(ID, "Shininess"), material_shininess);
 	glUniform1i(glGetUniformLocation(ID, "isTexture"), textureMode);
+	glUniform1i(glGetUniformLocation(ID, "isNormalMap"), normalMode && (textureIdx == texture_t::GROUND));
 
 	switch (textureIdx) {
 	case texture_t::GROUND:
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, textures[0]);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, textures[3]);
 		break;
 	case texture_t::DUCK:
 		glActiveTexture(GL_TEXTURE0);

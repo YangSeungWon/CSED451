@@ -21,11 +21,11 @@ vec4 calculateLightColor(vec3 pos, vec4 lightPosition, float brightness)
     vec3 L;
     if (lightPosition.w != 0.0)
     {
-        L = normalize(lightPosition.xzy - pos);
+        L = normalize(lightPosition.xyz - pos);
     }
     else
     {
-        L = normalize(lightPosition.xzy);
+        L = normalize(lightPosition.xyz);
     }
 		
     vec3 E = normalize(-pos);
